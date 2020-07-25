@@ -35,13 +35,11 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const choicesRoutes = require("./routes/choices");        //added CHOICES GT
 const questionsRoutes = require("./routes/questions");    //added QUESTIONS GT
-const mailgunRoutes = require("./routes/mailgun");        //added MAILGUN GT
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 app.use("/api/choices", choicesRoutes(db));                //added CHOICES GT
 app.use("/api/questions", questionsRoutes(db));            //added QUESTIONS GT
-app.use("/api/mailgun", mailgunRoutes());           //added MAILGUN GT
 // Note: mount other resources here, using the same pattern above
 
 
