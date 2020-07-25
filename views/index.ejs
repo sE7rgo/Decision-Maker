@@ -6,12 +6,31 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/new-poll.css" type="text/css">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+    <%- include('partials/_header') %>
+    <main class="new-poll">
+        <form action="">
+          <div>
+            <label for="Question"></label>
+            <input type="text" name="options_1" placeholder="Add an Option" maxlength="200" tabindex="1" data-validation-length="...200" data-validation-length-message="Option must not contain more then 200 characters" >
+          </div>
+          <div>
+            <label for="Question_2"></label>
+            <input type="text" name="options_1" placeholder="Add an Option" maxlength="200" tabindex="1" data-validation-length="...200" data-validation-length-message="Option must not contain more then 200 characters" >
+            <button type="button">Add an Option</button>
+          </div>
+          <div class="comment">
+            <label for="Comment">Comment</label>
+            <input type="text" name="comment" placeholder="Add a Comment (optional)" maxlength="400" tabindex="1" data-validation-length="...400" data-validation-length-message="Comments must not contain more then 400 characters" >
+            <button type="button">Add a comment</button>
+          </div>
+        </form>
+    </main>
   </body>
 </html>
