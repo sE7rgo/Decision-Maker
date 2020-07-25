@@ -10,6 +10,7 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 
+
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
@@ -33,14 +34,17 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const usersRoutes = require("./routes/users");
-const widgetsRoutes = require("./routes/widgets");
+const choicesRoutes = require("./routes/choices");        //added CHOICES GT
+const questionsRoutes = require("./routes/questions");    //added QUESTIONS GT
+const mailgunRoutes = require("./routes/mailgun");        //added MAILGUN GT
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
-app.use("/api/widgets", widgetsRoutes(db));
+app.use("/api/choices", choicesRoutes(db));                //added CHOICES GT
+app.use("/api/questions", questionsRoutes(db));            //added QUESTIONS GT
+app.use("/api/mailgun", mailgunRoutes());           //added MAILGUN GT
 // Note: mount other resources here, using the same pattern above
+
 
 
 // Home page

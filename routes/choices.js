@@ -1,7 +1,9 @@
 /*
- * All routes for Users are defined here
- * Since this file is loaded in server.js into api/users,
- *   these routes are mounted onto /users
+ *************  All routes for CHOICES are defined here **************
+
+ * Since this file is loaded in server.js into api/choices
+ *   these routes are mounted onto /choices
+ *
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
@@ -10,10 +12,10 @@ const router  = express.Router();
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users;`)
+    db.query(`SELECT * FROM choices;`)  //changed from users to 'choices' GT
       .then(data => {
-        const users = data.rows;
-        res.json({ users });
+        const choices = data.rows;  //changed to choices GT
+        res.json({ choices });     //changed to choices GT
       })
       .catch(err => {
         res
