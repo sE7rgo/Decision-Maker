@@ -6,10 +6,9 @@ addresses.  Graham holds the registration for the user profile on mailgun.com. F
 *****  this still requires some troubleshooting and further setup  *******
 
 */
-const ENV = process.env.ENV
 const mailgun = require("mailgun-js");
-const DOMAIN = MAILGUN_DOMAIN_NAME;  //not sure about env naming here ????
-const api_key = MAILGUN_API_KEY;
+const DOMAIN = process.env.MAILGUN_DOMAIN_NAME;
+const api_key = process.env.MAILGUN_API_KEY;
 const mg = mailgun({apiKey: api_key, domain: DOMAIN});
 const data = {
 	from: 'Poll_Creator <graham.l.tyler@gmail.com>',  //registered mailgun user
@@ -20,4 +19,4 @@ const data = {
 mg.messages().send(data, function (error, body) {
 	console.log(body);
 });
-modules.export = mailgun;
+module.exports = {mailgun};
