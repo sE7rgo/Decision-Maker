@@ -1,9 +1,9 @@
 /*
 **** This code is directly from the mailgun website ******
-It is only used for sending email to a restricted client list of 5 verifiable email
-addresses.  Graham holds the registration for the user profile on mailgun.com. For demonstration purposes we can set up to 3 more recipients.
-
-*****  this still requires some troubleshooting and further setup  *******
+* It is only used for sending email to a restricted client list of 5 verifiable email
+addresses.
+* Graham holds the registration for the user profile on mailgun.com. For demonstration purposes we can set up to 3 more recipients.
+* This is tested and functioning.
 
 */
 require('dotenv').config()
