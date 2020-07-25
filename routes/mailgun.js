@@ -6,17 +6,24 @@ addresses.  Graham holds the registration for the user profile on mailgun.com. F
 *****  this still requires some troubleshooting and further setup  *******
 
 */
-const mailgun = require("mailgun-js");
-const DOMAIN = process.env.MAILGUN_DOMAIN_NAME;
-const api_key = process.env.MAILGUN_API_KEY;
-const mg = mailgun({apiKey: api_key, domain: DOMAIN});
+require('dotenv').config()
+const mailgun = require('mailgun-js');
+const domain = process.env.MG_DOMAIN_NAME;
+const api_key = process.env.MG_API_KEY;
+const mg = mailgun({apiKey: api_key, domain: domain});
 const data = {
-	from: 'Poll_Creator <graham.l.tyler@gmail.com>',  //registered mailgun user
-	to: 'lord_proton@yahoo.ca, another@email.com, another@email.com, another@email.com',
+	from: 'Poll_Creator <graham.l.tyler@gmail.com>',
+	to: 'lord_proton@yahoo.ca ',
 	subject: 'Decision-Maker Poll',
 	text: 'You need to vote on this Poll'
 };
-mg.messages().send(data, function (error, body) {
-	console.log(body);
+mg.messages().send(data, function (err, body) {
+  if (err) {
+    console.log("got an error: ", err);
+} else {
+  console.log(body);
+}
 });
-module.exports = {mailgun};
+
+
+//module.exports = {mailgun};
