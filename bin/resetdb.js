@@ -22,7 +22,7 @@ const runSchemaFiles = function() {
     client.querySync(sql);
   }
 };
-
+// Loads the seedfiles from db/seeds
 const runSeedFiles = function() {
   console.log(chalk.cyan(`-> Loading Seeds ...`));
   const schemaFilenames = fs.readdirSync('./db/seeds');
