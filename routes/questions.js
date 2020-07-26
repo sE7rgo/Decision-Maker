@@ -5,11 +5,13 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {          // testing database with a complete pull of data
-  router.get('/getTable', (req, res) => {
-    db.query(`SELECT * FROM questions;`)
+  router.get("/getTable", (req, res) => {
+    let query = 'SELECT * FROM questions;'
+    console.log(query);
+    db.query(query)
       .then(data => {
         const questions = data.rows;  console.log(questions);
-        res.json({ questions });       // res.json({ questions });res.send(questions);
+        res.json({ questions });
       })
       .catch(err => {
         res
