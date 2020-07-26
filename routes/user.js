@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const app = express()
 
 /* cookie_session for user login */
 const cookieSession = require('cookie-session');
@@ -14,17 +15,18 @@ router.get("/login", (req, res) => {
 })
 
 router.post("/login", (req, res) => {
-  console.log(res.body)
-  console.log(req.params)
-  res.render("index", { email : null});
+  console.log('this is body', req.body)
+  console.log('this params', req.params.id)
+  req.session.user_id = req.params.id;
+  res.render('index', { email: req.session.user_id})
 })
 
 module.exports = router;
 
 
 // app.get('/login', (req, res) => {
-//   req.session.email = req.params.email;
-//   let templateVars = {
+//   rn.email = req.params.email;
+//   let templateq.sessioeVars = {
 //     email = req.session.email
 //   }
 //   res.render("index", templateVars);
