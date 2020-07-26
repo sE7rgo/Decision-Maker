@@ -31,25 +31,15 @@ app.use("/styles", sass({
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
-// Note: Feel free to replace the example routes below with your own
+
 const userRoutes = require("./routes/user");              //Routes for login/logout
-const choicesRoutes = require("./routes/choices");        //added CHOICES GT
-const questionsRoutes = require("./routes/questions");    //added QUESTIONS GT
+const questionsRoutes = require("./routes/questions");    //Routes for DB queries
 
 // Mount all resource routes
-// Note: Feel free to replace the example routes below with your own
-app.use(userRoutes);                                       //user routes for login/logout
-app.use("/api/choices", choicesRoutes(db));                //added CHOICES GT
-app.use("/api/questions", questionsRoutes(db));            //added QUESTIONS GT
-// Note: mount other resources here, using the same pattern above
+app.use('/user', userRoutes(db));             //user routes for login/logout
+app.use('/api', questionsRoutes(db));        //api routes for database queries
 
-// Home page
-// Warning: avoid creating more routes in this file!
-// Separate them into separate routes files (see above).
-app.get("/", (req, res) => {
-  res.render("index", { email : null});
-});
-
+// Server listen
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
