@@ -5,8 +5,8 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {          // testing database with a complete pull of data
-  router.get("/getTable", (req, res) => {
-    let query = 'SELECT * FROM questions;'
+  router.get("/creators", (req, res) => {
+    let query = 'SELECT creator_email FROM questions;'
     console.log(query);
     db.query(query)
       .then(data => {

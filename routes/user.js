@@ -5,10 +5,10 @@ const router  = express.Router()
 
 module.exports = (db) => {              //simple login functionality no security
   router.get("/login", (req, res) => {
-    db.query(`INSERT INTO questions () ;`)
-      .then(data => {
-        const questions = data.rows;
-        res.json({ questions });
+    db.query(`INSERT INTO questions () ;`) //we may need to simply include the login
+      .then(data => {                     //as just another field like straw poll so
+        const questions = data.rows;      //that the user gets both admin and user
+        res.json({ questions });          //emails.  There's no reason to log in?
       })
       .catch(err => {
         res
@@ -18,3 +18,5 @@ module.exports = (db) => {              //simple login functionality no security
   });
   return router;
 };
+
+
