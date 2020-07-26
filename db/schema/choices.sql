@@ -1,7 +1,8 @@
 DROP TABLE IF EXISTS choices CASCADE;
+
 CREATE TABLE choices (
   id SERIAL PRIMARY KEY NOT NULL,
-  questions_id INTEGER REFERENCES questions(id),
+  questions_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
   choice_text TEXT NOT NULL,
-  borda_rank INTEGER
+  borda_rank INTEGER NOT NULL
 );
