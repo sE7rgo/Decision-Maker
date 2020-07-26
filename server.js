@@ -10,17 +10,11 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 
-const cookieSession = require('cookie-session');
-app.use(cookieSession({
-  name: 'session',
-  keys: ['qwertasknxkcoiwokjsadkjhsad']
-}));
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
-
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
@@ -38,11 +32,13 @@ app.use(express.static("public"));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
+const userRoutes = require("./routes/user");              //Routes for login/logout
 const choicesRoutes = require("./routes/choices");        //added CHOICES GT
 const questionsRoutes = require("./routes/questions");    //added QUESTIONS GT
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
+app.use(userRoutes);                                       //user routes for login/logout
 app.use("/api/choices", choicesRoutes(db));                //added CHOICES GT
 app.use("/api/questions", questionsRoutes(db));            //added QUESTIONS GT
 // Note: mount other resources here, using the same pattern above
@@ -53,16 +49,8 @@ app.use("/api/questions", questionsRoutes(db));            //added QUESTIONS GT
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  const user_id = req.session.user_id;
-
-    console.log(req.session)
-    res.render("index", { email : null});
+  res.render("index", { email : null});
 });
-
-app.post("/login", (req, res) => {
-  console.log('this req', req.session)
-  res.redirect('/');
-})
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
