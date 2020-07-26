@@ -1,20 +1,15 @@
-/*
- *********  All routes for QUESTIONS are defined here **************
- * Since this file is loaded in server.js into api/questions
- *   these routes are mounted onto /questions
 
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
+// *********  All routes for Database are defined here **************
 
 const express = require('express');
 const router  = express.Router();
 
-module.exports = (db) => {
-  router.get("/", (req, res) => {
-    db.query(`SELECT * FROM questions;`)  //changed to questions GT
+module.exports = (db) => {          // testing database with a complete pull of data
+  router.get('/getTable', (req, res) => {
+    db.query(`SELECT * FROM questions;`)
       .then(data => {
-        const questions = data.rows;    //changed to questions GT
-        res.json({ questions });        //changed to questions GT
+        const questions = data.rows;  console.log(questions);
+        res.json({ questions });       // res.json({ questions });res.send(questions);
       })
       .catch(err => {
         res
