@@ -1,7 +1,11 @@
 // See: https://sass-lang.com/
 
 body {
-  background-color: #EEE;
+  margin-top: 15vw;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Syncopate', sans-serif;
 
   h1 {
     color: #244751;
