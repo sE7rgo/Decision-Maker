@@ -114,4 +114,10 @@ router.get("/", (req, res) => {
   return router;
 };
 
+// ***********************   GET FAKE login  *********************
+router.get('/login/:id', (req, res) => {
+  req.user_id = req.params.id; console.log(req.user_id)
+  res.redirect('/');
+});
+
 
