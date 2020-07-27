@@ -52,7 +52,10 @@ module.exports = (db) => {
 
   router.get("/polls/:id", (req, res) => {
     let query = {
-      text: `SELECT creator_email, poll_code, voters.emailFROM questions WHERE poll_code = $1`,
+      text: `SELECT creator_email, poll_code, voters.voter_email
+             FROM questions
+             JOIN voters ON voters.questions_id = questions.id
+             WHERE poll_code = $1`,
       values: [req.params.id]
     }
     console.log(query);
@@ -60,15 +63,16 @@ module.exports = (db) => {
       .then(data => {
         const poll_id = data.rows[0].poll_code;
         const creatorEmail = data.rows[0].creator_email;
+        const voterEmail = data.rows[0].voter_email;
 
         // Mailgun Sendout to Users and Creator
-        const inputData = {
+        const inputData = {              //${voterEmail} has to allow more than 1 email (usually 3 at least)?????????????????
           from: 'Decision Maker<graham.l.tyler@gmail.com>',
-          to: `${creatorEmail}, lord_proton@yahoo.ca`,    //need link to voters
+          to: `${creatorEmail}, ${voterEmail}, lord_proton@yahoo.ca`,
           subject: 'Decision-Maker Poll',
           text: `Copy this Polling Code ${poll_id} and click the following link http://localhost:8080/ to go to Decision Maker and vote.`
-                          //once pollpage is made, update this
-        };
+
+        };  console.log(inputData);
 
         mg.messages().send(inputData, function (err, body) {
           if (err) {
