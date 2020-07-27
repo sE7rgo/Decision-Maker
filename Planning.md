@@ -2,54 +2,49 @@
 
 ## User Stories
 
-- As a user I want to make a Poll, because I'm lazy to make decisions.
-- As user I want to send this poll to my friends and myself.
-- As user I want to be able to edit/delete my POLL.
-- As a user I want post a number of choices and have friends rank those choices individualy.
-- As a user I want the program to take friend's rankings and apply Borda method on them.
-- As a user I want to see the result decision.
+- As a user I want to make a straw poll , because I want a group decision.
+- As a user I want to send this poll to my friends and myself.
+- As a user I want to be able to be able to edit and delete my poll.
+- As a user I want to post a number of choices for the poll question.
+- As a user I want my friends to rank those choices individually and cast vote.
+- As a user I want the app to collate the rankings and calulate #1 choice.
+- As a user I want to see the final outcome.
 
-## User Scenarios
+## User Scenario
 
-- When I enter e-mail, I am able to create the POLL.
-- I am able to logout.
-- I can create a new custom poll with multiple choices.
-- I can then enter my friends email address and send the link for this POLL.
+- As a user I will begin by entering my email, so I can get the results.
+- I will then enter the question to be voted on by me and my friends.
+- I will then enter at least 3 choices for my friends to rank.
+- I will then enter the email addresses of all those whom I want to poll.
+- Once all fields are complete, I will click the submit button to send out poll.
+- All people on email list will recieve link with poll-code attached.
+- All will enter code on webpage and then they will enter their rankings.
+- After each submission, I will get an email update of the current vote outcome.
+
 - STRETCH =====>>>>    I am able to add an extra email row 
-- STRETCH =====>>>>    I can see all POLL results
-- STRETCH =====>>>>    Set the date when posted
+- STRETCH =====>>>>    I can see detailed poll results
+- STRETCH =====>>>>    Build user profiles with secure login
+- STRETCH =====>>>>    See graphical representation of voting results
 
 ## ERD
 
-- ||||ID |||||||QUESTION_ID||||||||CREATOR_EMAIL|||
+- ------------------------  QUESTIONS_TABLE  ----------------------------------
 
-- -- friends db with emails
+- ||||| question_ID |||||  creator_email  ||||| question_text ||||| poll_code
 
-- |||| ID ||||||QUESTION_ID |||||||FRIEND_EMAIL||||
+- ------------------------  CHOICES_TABLE  ------------------------------------
 
-- -- POLL db
-- ------------DECI_TABLE--------------------------
-
-- ||||| ID |||||| QUESTION  ||||||| 
-
-- ------------CHOICE_TABLE---------------------------
-
-- |||| ID ||||QUESTION_ID||| POLL_TEXT ||||||| POLL_RANK DEFAULT NULL|||||
+- |||| choices_id |||| questions_ID |||| choice_text |||| borda_rank ||||
 
 
 ## Routes
-- login
-- R POST/poll
+# When creating a poll:
+- R POST/poll_submit  - once creator has filled all fields he/she submits to DB
 
-- Create poll when logged_in
-- R GET/poll
-- R POST/poll
+# When sending out a poll
+- R GET/poll/:id  - send out the poll_code to voters 
 
-- Vote when have route
-- R POST/poll/:id
-
-- Modify or delete poll when have link
-- R POST/poll/:another_id
-
-- result page
-- R GET/poll/:id/result
+# When voting on a poll
+- R GET/poll_to_vote_on/:id  - when voter enters the poll_code to get poll
+- R POST/vote_cast/:id - when voter submits their vote on the vote page
+- R GET/poll_results - gets current borda_count and sends update email to creator
