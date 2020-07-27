@@ -12,7 +12,6 @@ const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
 
-
 // PG database client/connection setup
 const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
@@ -45,7 +44,7 @@ const userRoutes = require("./routes/user");              //Routes for login/log
 const questionsRoutes = require("./routes/questions");    //Routes for DB queries
 
 // Mount all resource routes
-app.use(userRoutes);
+app.use('/user', userRoutes(db));
 app.use('/api', questionsRoutes(db));        //api routes for database queries
 
 app.get("/", (req, res) => {
