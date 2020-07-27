@@ -104,4 +104,9 @@ module.exports = (db) => {
   return router;
 };
 
-// ***********************   Testing Database from Browswer  *********************
+// ***********************   GET main page in Browswer  *********************
+
+
+
+
+
