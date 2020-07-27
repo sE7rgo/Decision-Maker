@@ -1,0 +1,23 @@
+.new-poll {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 3em;
+
+
+  input {
+    padding-left: 30wv;
+    width: 40em;
+  }
+  .new-question {
+    border: none;
+    background-color: transparent;
+    padding-bottom: 2em;
+  }
+
+  .comment {
+    display: inline-grid;
+    padding-top: 2em;
+  }
+
+}
