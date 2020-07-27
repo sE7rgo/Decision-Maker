@@ -101,12 +101,17 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-  return router;
-};
+
 
 // ***********************   GET main page in Browswer  *********************
 
-
-
+router.get("/", (req, res) => {
+  let templateVars = {
+    email: null
+  };
+    res.render("index", templateVars);
+});
+  return router;
+};
 
 
