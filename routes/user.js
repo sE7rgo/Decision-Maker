@@ -1,10 +1,8 @@
-//********************** user routes for login/logout  **********************
-
-// ***************  this is not needed ***************************
-
 const express = require('express');
-const router  = express.Router()
+const router  = express.Router();
 
+
+<<<<<<< HEAD
 module.exports = (db) => {              //simple login functionality no security
   router.get("/login", (req, res) => {
     db.query(`INSERT INTO questions () ;`) //we may need to simply include the login
@@ -20,5 +18,16 @@ module.exports = (db) => {              //simple login functionality no security
   });
   return router;
 };
+=======
+router.post("/login", (req, res) => {
+  req.session.user_id = req.body.creator_email;
+  res.render('index', { email: req.session.user_id})
+})
+>>>>>>> 64e8c9aac66fb26b3064a7c9b8995d1d76e4b802
 
+router.post("/logout", (req, res) => {
+  req.session = null;
+  res.render('index', { email: null})
+})
 
+module.exports = router;
