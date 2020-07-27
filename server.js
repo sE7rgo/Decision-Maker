@@ -1,4 +1,5 @@
 // load .env data into process.env
+
 require('dotenv').config();
 
 // Web server config
@@ -10,7 +11,6 @@ const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
-
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -44,7 +44,7 @@ const userRoutes = require("./routes/user");              //Routes for login/log
 const questionsRoutes = require("./routes/questions");    //Routes for DB queries
 
 // Mount all resource routes
-app.use(userRoutes);
+app.use('/user', userRoutes(db));
 app.use('/api', questionsRoutes(db));        //api routes for database queries
 
 app.get("/", (req, res) => {

@@ -6,16 +6,18 @@ addresses.
 * This is tested and functioning.
 
 */
+
+
 require('dotenv').config()
 const mailgun = require('mailgun-js');
 const domain = process.env.MG_DOMAIN_NAME;
 const api_key = process.env.MG_API_KEY;
 const mg = mailgun({apiKey: api_key, domain: domain});
 const data = {
-	from: 'Poll_Creator <graham.l.tyler@gmail.com>',
+	from: 'Decision Maker <graham.l.tyler@gmail.com>',
 	to: 'lord_proton@yahoo.ca ',
 	subject: 'Decision-Maker Poll',
-	text: 'You need to vote on this Poll'
+	text: 'http://localhost:8080/api/POLLPAGEHERE' //once pollpage is made, update this
 };
 mg.messages().send(data, function (err, body) {
   if (err) {
@@ -25,5 +27,4 @@ mg.messages().send(data, function (err, body) {
 }
 });
 
-
-//module.exports = {mailgun};
+module.exports = {mailgun};

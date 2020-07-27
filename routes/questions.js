@@ -5,6 +5,8 @@
 
 const express = require('express');
 const router  = express.Router();
+const {mg} = require('../helper_functions/mailgun');
+
 
 //************************  POST completed poll to Database *****************
 
@@ -45,15 +47,42 @@ module.exports = (db) => {
   });
 
 
-// *****************  Retrieve Poll_code to Mail out to Voters  ***************
+// *****************  Retrieve Poll_code and Mail out to Voters  ***************
 
 
-  router.get("/poll/:id", (req, res) => {
-    let query = 'SELECT ......;'
+  router.get("/polls/:id", (req, res) => {
+    let query = {
+      text: `SELECT creator_email, poll_code, voters.voter_email
+             FROM questions
+             JOIN voters ON voters.questions_id = questions.id
+             WHERE poll_code = $1`,
+      values: [req.params.id]
+    }
     console.log(query);
     db.query(query)
       .then(data => {
-        const poll_id = data.rows;  console.log(poll_id);
+        const poll_id = data.rows[0].poll_code;
+        const creatorEmail = data.rows[0].creator_email;
+        const voterEmail = data.rows[0].voter_email;
+
+        // Mailgun Sendout to Users and Creator
+        const inputData = {              //${voterEmail} has to allow more than 1 email (usually 3 at least)?????????????????
+          from: 'Decision Maker<graham.l.tyler@gmail.com>',
+          to: `${creatorEmail}, ${voterEmail}, lord_proton@yahoo.ca`,
+          subject: 'Decision-Maker Poll',
+          text: `Copy this Polling Code ${poll_id} and click the following link http://localhost:8080/ to go to Decision Maker and vote.`
+
+        };  console.log(inputData);
+
+        mg.messages().send(inputData, function (err, body) {
+          if (err) {
+            console.log("got an error: ", err);
+        } else {
+          console.log(body);
+        }
+        });
+
+
         res.json({ poll_id });
       })
       .catch(err => {
@@ -81,8 +110,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
-
 
 //********************  Testing database connection from browswer  ******************
 
@@ -114,10 +141,5 @@ router.get("/", (req, res) => {
   return router;
 };
 
-// ***********************   GET FAKE login  *********************
-router.get('/login/:id', (req, res) => {
-  req.user_id = req.params.id; console.log(req.user_id)
-  res.redirect('/');
-});
 
 
