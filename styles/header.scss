@@ -1,0 +1,50 @@
+header {
+  position: fixed;
+  top: 0;
+  background-color: #0066e3;
+  background-image: url("https://www.transparenttextures.com/patterns/light-wool.png");
+  height: 13vw;
+  width: 100vw;
+
+  nav {
+    display: flex;
+    justify-items: center;
+    justify-content: space-between;
+    padding: 2em;
+    font-family: 'Monoton', cursive;
+    font-size: x-large;
+
+    button {
+      font-family: 'Black Ops One', cursive;
+      color: rgb(8, 1, 39) ;
+      background-color:transparent;
+      border: 0;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      position: relative;
+      transition: all 0.5s;
+    }
+
+    button:active {
+      border: none;
+    }
+    button:after {
+      content: '»';
+      color: red;
+      position: relative;
+      opacity: 0;
+      top: 1px;
+      right: 1em;
+      transition: 0.5s;
+    }
+    button:hover {
+      padding-right: 2em;
+      padding-left:2em;
+    }
+    button:hover:after {
+        opacity: 1;
+        right: 0.1em;
+    }
+  }
+}
