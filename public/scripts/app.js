@@ -16,27 +16,32 @@ const createOption = (() => {
   return option;
 });
 
+const createEmail = (() => {
+  const email = `<div class="email">
+  <input type="text" name="email" placeholder="Add an email"></input>
+  </div>`
+  return email
+})
+
 const appendOption = (() => {
-  console.log('renderOption')
-  const newOption = createOption();
-  console.log(newOption)
   $( 'options' ).empty();
   $('.options').append(createOption());
-})
+});
+
+const appendEmail = (() => {
+  $('.emails').append(createEmail());
+ });
+
 
 $(document).ready(() => {
 
   $('.new-question').click((event) => {
-    console.log('submit button')
     event.preventDefault();
     appendOption();
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: "/",
-  //   })
-  //     .then(() => {
-  //       console.log('hola')
-  //       renderOption();
-  //     });
   })
+
+  $('.new-email').click((event) => {
+    event.preventDefault();
+    appendEmail();
+  });
 })
