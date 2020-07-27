@@ -5,6 +5,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const mailgun = require('../public/helper_functions/mailgun');
 
 //************************  POST completed poll to Database *****************
 
@@ -114,10 +115,5 @@ router.get("/", (req, res) => {
   return router;
 };
 
-// ***********************   GET FAKE login  *********************
-router.get('/login/:id', (req, res) => {
-  req.user_id = req.params.id; console.log(req.user_id)
-  res.redirect('/');
-});
 
 
