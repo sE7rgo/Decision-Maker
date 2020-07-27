@@ -4,20 +4,59 @@
   justify-content: center;
   margin-top: 3em;
 
+  .question {
+    display: flex;
+    flex-flow: column;
+    padding-bottom: 2em;
+  }
+
+  .options {
+    display: flex;
+    flex-flow: column;
+  }
 
   input {
-    padding-left: 30wv;
     width: 40em;
+    margin-top: 0.5em;
+    border-bottom: 0.1em solid gray;
+    border-top: none;
+    border-left: none;
+    border-right: none;
   }
   .new-question {
+    font-size: large;
     border: none;
     background-color: transparent;
     padding-bottom: 2em;
+    color: blue;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .new-question:hover {
+    color: chartreuse;
+    transition: all 0.8s;
   }
 
   .comment {
     display: inline-grid;
     padding-top: 2em;
+
+    button {
+      position: relative;
+      margin-top: 0.5em;
+      height: 2em;
+      background-color: #4CAF50;
+      border: none;
+      color: #FFFFFF;
+      text-decoration: none;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #9bb39c;
+      transition: all 0.8s;
+    }
   }
 
 }

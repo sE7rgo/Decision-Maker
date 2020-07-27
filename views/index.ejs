@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/styles/new-poll.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 
@@ -18,22 +18,29 @@
   <body>
     <%- include('partials/_header') %>
     <main class="new-poll">
+      <% if (email) {%>
         <form action="">
-          <div>
-            <label for="Question"></label>
-            <input type="text" name="options_1" placeholder="Add an Option" maxlength="200" tabindex="1" data-validation-length="...200" data-validation-length-message="Option must not contain more then 200 characters" >
+          <div class="question">
+            <label for="question">QUESTION</label>
+            <input type="text" name="question"></input>
+          </div>
+          <div class="options">
+            <label for="Option">POLL OPTIONS</label>
+            <input type="text" name="options_1" placeholder="Add an Option"></input>
           </div>
           <div>
             <label for="Question_2"></label>
-            <input type="text" name="options_1" placeholder="Add an Option" maxlength="200" tabindex="1" data-validation-length="...200" data-validation-length-message="Option must not contain more then 200 characters" >
+            <input type="text" name="options_1" placeholder="Add an Option"></input>
             <button class="new-question" type="button">Add an Option</button>
           </div>
           <div class="comment">
             <label for="Comment">Comment</label>
-            <input type="text" name="comment" placeholder="Add a Comment (optional)" maxlength="400" tabindex="1" data-validation-length="...400" data-validation-length-message="Comments must not contain more then 400 characters" >
+            <input type="text" name="comment" placeholder="Add a Comment (optional)"></input>
             <button type="submit">Submit</button>
           </div>
         </form>
+        <% } else { %>
+          <% } %>
     </main>
     <%- include('partials/_footer') %>
   </body>
