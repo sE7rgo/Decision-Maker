@@ -20,8 +20,12 @@
     <main class="new-poll">
       <% if (email) {%>
         <form action="">
-          <div>
-            <label for="Question"></label>
+          <div class="question">
+            <label for="question">QUESTION</label>
+            <input type="text" name="question" placeholder="Add a question" maxlength="400" tabindex="1" data-validation-length="...400" data-validation-length-message="Questions must not contain more then 400 characters" >
+          </div>
+          <div class="options">
+            <label for="Option">POLL OPTIONS</label>
             <input type="text" name="options_1" placeholder="Add an Option" maxlength="200" tabindex="1" data-validation-length="...200" data-validation-length-message="Option must not contain more then 200 characters" >
           </div>
           <div>
