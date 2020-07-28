@@ -4,5 +4,5 @@ CREATE TABLE choices (
   id SERIAL PRIMARY KEY NOT NULL,
   questions_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
   choice_text TEXT NOT NULL,
-  borda_rank INTEGER NOT NULL
+  borda_rank INTEGER NOT NULL DEFAULT 0
 );
