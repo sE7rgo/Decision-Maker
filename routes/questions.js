@@ -13,7 +13,7 @@ const {mg} = require('../helper_functions/mailgun');
 module.exports = (db) => {
 
   router.post("/poll_submit", (req, res) => {
-    let query = 'INSERT INTO...;'
+    let query = 'INSERT INTO...;';
     console.log(query);
     db.query(query)
       .then(data => {
@@ -28,11 +28,11 @@ module.exports = (db) => {
   });
 
 
-//  ************************** POST Voter's Rankings to DB *********************
+  //  ************************** POST Voter's Rankings to DB *********************
 
 
   router.post("/vote_cast/:id", (req, res) => {
-    let query = 'INSERT INTO....;'
+    let query = 'INSERT INTO....;';
     console.log(query);
     db.query(query)
       .then(data => {
@@ -47,7 +47,7 @@ module.exports = (db) => {
   });
 
 
-// *****************  Retrieve Poll_code and Mail out to Voters  ***************
+  // *****************  Retrieve Poll_code and Mail out to Voters  ***************
 
 
   router.get("/polls/:id", (req, res) => {
@@ -57,32 +57,33 @@ module.exports = (db) => {
              JOIN voters ON voters.questions_id = questions.id
              WHERE poll_code = $1`,
       values: [req.params.id]
-    }
+    };
     console.log(query);
+    let voterEmails = [];
     db.query(query)
       .then(data => {
         const poll_id = data.rows[0].poll_code;
         const creatorEmail = data.rows[0].creator_email;
-        const voterEmail = data.rows[0].voter_email;
+        for (const row of data.rows) {
+          voterEmails.push(row.voter_email)
+        }
+          let insertVoters = voterEmails.toString().replace(/,/g, ', ' );
 
         // Mailgun Sendout to Users and Creator
-        const inputData = {              //${voterEmail} has to allow more than 1 email (usually 3 at least)?????????????????
+        const inputData = {
           from: 'Decision Maker<graham.l.tyler@gmail.com>',
-          to: `${creatorEmail}, ${voterEmail}, lord_proton@yahoo.ca`,
+          to: `${creatorEmail}, ${insertVoters}, lord_proton@yahoo.ca`,
           subject: 'Decision-Maker Poll',
           text: `Copy this Polling Code ${poll_id} and click the following link http://localhost:8080/ to go to Decision Maker and vote.`
+        }; console.log('Look here ====>>>>', inputData);
 
-        };  console.log(inputData);
-
-        mg.messages().send(inputData, function (err, body) {
+        mg.messages().send(inputData, function(err, body) {
           if (err) {
             console.log("got an error: ", err);
-        } else {
-          console.log(body);
-        }
+          } else {
+            console.log(body);
+          }
         });
-
-
         res.json({ poll_id });
       })
       .catch(err => {
@@ -93,11 +94,11 @@ module.exports = (db) => {
   });
 
 
-// **********************  GET Results and Send to Creator ********************
+  // **********************  GET Results and Send to Creator ********************
 
 
   router.get("/poll_results", (req, res) => {
-    let query = 'SELECT ......;'
+    let query = 'SELECT ......;';
     console.log(query);
     db.query(query)
       .then(data => {
@@ -111,11 +112,11 @@ module.exports = (db) => {
       });
   });
 
-//********************  Testing database connection from browswer  ******************
+  //********************  Testing database connection from browswer  ******************
 
 
   router.get("/questions", (req, res) => {
-    let query = 'SELECT * FROM questions;'
+    let query = 'SELECT * FROM questions;';
     console.log(query);
     db.query(query)
       .then(data => {
@@ -130,14 +131,14 @@ module.exports = (db) => {
   });
 
 
-// ***********************   GET main page in Browswer  *********************
+  // ***********************   GET main page in Browswer  *********************
 
-router.get("/", (req, res) => {
-  let templateVars = {
-    email: null
-  };
+  router.get("/", (req, res) => {
+    let templateVars = {
+      email: null
+    };
     res.render("index", templateVars);
-});
+  });
   return router;
 };
 

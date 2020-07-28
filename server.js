@@ -47,9 +47,7 @@ const userRoutes = require("./routes/user");              //Routes for login/log
 app.use(userRoutes);
 
 // app.use('/api', questionsRoutes(db));        //api routes for database queries
-
 app.use('/api', questionsRoutes(db));        //api routes for database queries
-
 
 app.get("/", (req, res) => {
   res.render("index", { email : null});
