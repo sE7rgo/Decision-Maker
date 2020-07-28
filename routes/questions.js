@@ -124,7 +124,7 @@ module.exports = (db) => {
         res.json({ questions });
       })
       .catch(err => {
-        res
+        reslogin
           .status(500)
           .json({ error: err.message });
       });

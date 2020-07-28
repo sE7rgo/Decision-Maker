@@ -15,6 +15,27 @@
     flex-flow: column;
   }
 
+
+  .emails {
+    display: flex;
+    flex-flow: column;
+    padding-bottom: 2em;
+  }
+
+  .new-email {
+    font-size: large;
+    border: none;
+    background-color: transparent;
+    padding-bottom: 2em;
+    color: blue;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .new-email:hover {
+    color: chartreuse;
+    transition: all 0.8s;
+  }
+
   input {
     width: 40em;
     margin-top: 0.5em;
@@ -23,7 +44,7 @@
     border-left: none;
     border-right: none;
   }
-  .new-question {
+  .new-option {
     font-size: large;
     border: none;
     background-color: transparent;
@@ -33,7 +54,7 @@
     cursor: pointer;
   }
 
-  .new-question:hover {
+  .new-option:hover {
     color: chartreuse;
     transition: all 0.8s;
   }

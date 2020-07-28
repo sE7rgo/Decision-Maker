@@ -1,42 +1,43 @@
-$(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api/users"   //this address needs to change
-  }).done((users) => {  //need to change this
-    for(user of users) {   //needs to change to 'question of questions'
-      $("<div>").text(user.name).appendTo($("body"));  //question
-    }
-  });;
-});
-
+/* Create an option HTML */
 const createOption = (() => {
   const option = `<div class="option"></div>
   <input type="text" name="options_1" placeholder="Add an Option"></input>
   </div>`
   return option;
 });
+/* Create an email HTML */
 
-const appendOption = (() => {
-  console.log('renderOption')
-  const newOption = createOption();
-  console.log(newOption)
-  $( 'options' ).empty();
-  $('.options').append(createOption());
+const createEmail = (() => {
+  const email = `<div class="email">
+  <input type="text" name="email" placeholder="Add an email"></input>
+  </div>`
+  return email
 })
 
-$(document).ready(() => {
+const appendOption = (() => {
+  $( 'options' ).empty();
+  $('.options').append(createOption());
+});
 
-  $('.new-question').click((event) => {
-    console.log('submit button')
+const appendEmail = (() => {
+  $('.emails').append(createEmail());
+ });
+
+
+$(document).ready(() => {
+  let optionCounter = 4;
+  $('.new-option').siblings('output')
+  .val(`You can add ${optionCounter} more options`)
+  $('.new-option').click((event) => {
+    optionCounter--;
+    $('.new-option').siblings('output')
+    .val(`You can add ${optionCounter} more options`)
     event.preventDefault();
     appendOption();
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: "/",
-  //   })
-  //     .then(() => {
-  //       console.log('hola')
-  //       renderOption();
-  //     });
   })
+
+  $('.new-email').click((event) => {
+    event.preventDefault();
+    appendEmail();
+  });
 })
