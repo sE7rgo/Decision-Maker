@@ -4,6 +4,10 @@
   justify-content: center;
   margin-top: 3em;
 
+  input {
+    font-size:  small;
+  }
+
   .question {
     display: flex;
     flex-flow: column;
