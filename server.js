@@ -45,11 +45,6 @@ const questionsRoutes = require("./routes/questions");    //Routes for DB querie
 
 // Mount all resource routes
 app.use(userRoutes);
-<<<<<<< HEAD
-
-// app.use('/api', questionsRoutes(db));        //api routes for database queries
-=======
->>>>>>> 5822228102c4ffa2f4e72cc493b77b58f51ede38
 app.use('/api', questionsRoutes(db));        //api routes for database queries
 
 app.get("/", (req, res) => {
