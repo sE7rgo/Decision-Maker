@@ -42,9 +42,10 @@ app.use(express.static("public"));
 
 const userRoutes = require("./routes/user");              //Routes for login/logout
 //const questionsRoutes = require("./routes/questions");    //Routes for DB queries
-
+const newPollRoutes = require("./routes/new_poll");         //Routes for new polls
 // Mount all resource routes
 app.use(userRoutes);
+app.use(newPollRoutes);
 //app.use('/api', questionsRoutes(db));        //api routes for database queries
 
 app.get("/", (req, res) => {
