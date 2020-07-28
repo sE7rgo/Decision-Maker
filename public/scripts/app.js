@@ -1,20 +1,11 @@
-$(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api/users"   //this address needs to change
-  }).done((users) => {  //need to change this
-    for(user of users) {   //needs to change to 'question of questions'
-      $("<div>").text(user.name).appendTo($("body"));  //question
-    }
-  });;
-});
-
+/* Create an option HTML */
 const createOption = (() => {
   const option = `<div class="option"></div>
   <input type="text" name="options_1" placeholder="Add an Option"></input>
   </div>`
   return option;
 });
+/* Create an email HTML */
 
 const createEmail = (() => {
   const email = `<div class="email">
@@ -34,8 +25,13 @@ const appendEmail = (() => {
 
 
 $(document).ready(() => {
-
-  $('.new-question').click((event) => {
+  let optionCounter = 4;
+  $('.new-option').siblings('output')
+  .val(`You can add ${optionCounter} more options`)
+  $('.new-option').click((event) => {
+    optionCounter--;
+    $('.new-option').siblings('output')
+    .val(`You can add ${optionCounter} more options`)
     event.preventDefault();
     appendOption();
   })
