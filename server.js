@@ -45,11 +45,11 @@ const userRoutes = require("./routes/user");              //Routes for login/log
 
 // Mount all resource routes
 app.use(userRoutes);
-<<<<<<< HEAD
+
 // app.use('/api', questionsRoutes(db));        //api routes for database queries
-=======
+
 app.use('/api', questionsRoutes(db));        //api routes for database queries
->>>>>>> 4705bed06d14c8189bc8e2600fe23b442c1bed8a
+
 
 app.get("/", (req, res) => {
   res.render("index", { email : null});
