@@ -44,11 +44,24 @@
     border-left: none;
     border-right: none;
   }
+
+
+  .option-counter {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  output {
+    font-size: x-small;
+  }
+
   .new-option {
     font-size: large;
     border: none;
     background-color: transparent;
-    padding-bottom: 2em;
     color: blue;
     overflow: hidden;
     cursor: pointer;
@@ -79,5 +92,12 @@
       transition: all 0.8s;
     }
   }
-
+  .error {
+    display: none;
+    border: none;
+    color: #873242;
+    background-color: transparent;
+    text-align: center;
+    padding: 15px;
+  }
 }

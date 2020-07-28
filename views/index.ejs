@@ -21,17 +21,21 @@
       <% if (email) {%>
         <form action="">
           <div class="question">
+            <label for="error">
+              <p class="error"></p>
+            </label>
             <label for="question">QUESTION</label>
             <input type="text" name="question"></input>
           </div>
           <div class="options">
             <label for="Option">POLL OPTIONS</label>
             <input type="text" name="options_1" placeholder="Add an Option"></input>
-          </div>
-          <div>
             <label for="Question_2"></label>
             <input type="text" name="options_1" placeholder="Add an Option"></input>
-            <button class="new-question" type="button">Add an Option</button>
+          </div>
+          <div class="option-counter">
+            <button class="new-option" type="button">Add an Option</button>
+            <output name="counter" for="Options-number"></output>
           </div>
           <div class="emails">
             <label for="emails">WHOM ARE YOU ASKING?</label>

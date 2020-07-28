@@ -26,15 +26,22 @@ const appendEmail = (() => {
 
 $(document).ready(() => {
   let optionCounter = 4;
-  $('.new-option').siblings('output')
-  .val(`You can add ${optionCounter} more options`)
-  $('.new-option').click((event) => {
-    optionCounter--;
     $('.new-option').siblings('output')
     .val(`You can add ${optionCounter} more options`)
-    event.preventDefault();
-    appendOption();
-  })
+    $('.new-option').click((event) => {
+      optionCounter--;
+      if (optionCounter < 0) {
+        $('.error').text(`❌ That's it, only 6 options 😀`);
+        $('.error').css('border', '3px solid red');
+        $('.error').slideDown(1000);
+      } else {
+      $('.new-option').siblings('output')
+      .val(`You can add ${optionCounter} more options`);
+      event.preventDefault();
+      appendOption();
+      }
+    });
+
 
   $('.new-email').click((event) => {
     event.preventDefault();
