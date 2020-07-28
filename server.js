@@ -41,13 +41,13 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 
 const userRoutes = require("./routes/user");              //Routes for login/logout
-//const questionsRoutes = require("./routes/questions");    //Routes for DB queries
+const questionsRoutes = require("./routes/questions");    //Routes for DB queries
 
 // Mount all resource routes
-app.use(userRoutes);
-//app.use('/api', questionsRoutes(db));        //api routes for database queries
+app.use(userRoutes);                          //userRoutes for login/logout
+app.use('/api', questionsRoutes(db));        //api routes for database queries
 
-app.get("/", (req, res) => {
+app.get("/", (req, res) => {               //landing page with/without user login
   return(req.session.user_id
    ? res.render("index", { email : req.session.user_id})
    : res.render("index", { email : null})
