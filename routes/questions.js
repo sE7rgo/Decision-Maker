@@ -27,9 +27,9 @@ module.exports = (db) => {
         const poll_id = data.rows[0].poll_code;
         const creatorEmail = data.rows[0].creator_email;
         for (const row of data.rows) {
-          voterEmails.push(row.voter_email)
+          voterEmails.push(row.voter_email);
         }
-          let insertVoters = voterEmails.toString().replace(/,/g, ', ' );
+        let insertVoters = voterEmails.toString().replace(/,/g, ', ');
 
         // Mailgun Sendout to Users and Creator
         const inputData = {
@@ -46,7 +46,7 @@ module.exports = (db) => {
             console.log(body);
           }
         });
-        //res.json({ poll_id });
+        //res.json({ poll_id });  //just for testing
       })
       .catch(err => {
         res
@@ -71,12 +71,12 @@ module.exports = (db) => {
     let resultsTally = [];
     db.query(query)
       .then(data => {
-        const creatorEmail = data.rows[0].creator_email
+        const creatorEmail = data.rows[0].creator_email;
         const poll_id = data.rows[0].poll_code;
         const questionText = data.rows[0].question_text;
         for (const row of data.rows) {
-          bordaRank.push(row.borda_rank)
-          pollOptions.push(row.choice_text)
+          bordaRank.push(row.borda_rank);
+          pollOptions.push(row.choice_text);
         }
         for (let j = 0; j < bordaRank.length; j++) {
           resultsTally.push(pollOptions[j]);
@@ -99,7 +99,7 @@ module.exports = (db) => {
             console.log(body);
           }
         });
-        res.json({ poll_id });  //feedback for webpage testing
+        //res.json({ poll_id });  //feedback for webpage testing
       })
       .catch(err => {
         res
@@ -110,13 +110,27 @@ module.exports = (db) => {
 
   //************************** GET poll from DB for Voter *************************
 
-  router.get("/poll_results", (req, res) => {
-    let query = 'SELECT ......;';
+  //Sergii, I have set this up for you, change it to meet your needs.
+
+  router.get("/poll_results", (req, res) => {   //change address as necessary
+    let query = {
+      text: `SELECT questions.poll_code, questions.question_text, choices.choice_text
+      FROM questions
+      JOIN choices ON choices.questions_id = questions.id
+      WHERE poll_code = $1`,
+      values: [req.params.id]  //this is the poll_code entered by voter
+    };
     console.log(query);
+    let choices = [];
     db.query(query)
       .then(data => {
-        const poll_results = data.rows;  console.log(poll_results);
-        res.json({ poll_results });
+        const poll_code = data.rows[0].poll_code;  //data for poll_page
+        const question = data.rows[0].question_text;
+        for (const row of data.rows) {
+          choices.push(row.choice_text); //this is an array with all rankings
+        }
+        let templateVars = {email: req.session.user_id, poll_code, question, choices};
+        res.render('poll_show', templateVars);  //change this as you see fit.
       })
       .catch(err => {
         res
@@ -124,11 +138,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
-
-
-
-
 
   //********************  Testing database connection from browswer  ******************
 
@@ -142,7 +151,7 @@ module.exports = (db) => {
         res.json({ questions });
       })
       .catch(err => {
-        reslogin
+        res
           .status(500)
           .json({ error: err.message });
       });
