@@ -43,7 +43,7 @@ module.exports = (db) => {
       }))
     })
     .then(() => {
-      return Propmise.all(email.map(user_email => {
+      return Promise.all(email.map(user_email => {
         return db.query (`
           INSERT INTO voters
           (poll_code, voter_email)
