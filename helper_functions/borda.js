@@ -10,6 +10,9 @@ Ranking	Candidate	Formula	Points	Relative points
 4th	    David	      n−3	    2	      0.40
 5th	    Elizabeth	  n−4	    1	      0.20
 Taken from:  https://en.wikipedia.org/wiki/Borda_count
+
+ ****** call function with rankings from Choices and from Voters new rankings ****
+ ****** Whichever choice has the most point, wins!!! ***********
 */
 const borda = function(rankingsFromDB, voterRankings) {  //these are arrays of rankings
   let count = voterRankings.length;
