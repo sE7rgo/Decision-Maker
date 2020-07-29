@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Show Poll</title>
+    <title>Edit Poll</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/styles/poll-show.css" type="text/css" />
@@ -21,16 +21,29 @@
   </header>
   <body>
     <div class="container">
-      <h2><%= question %></h2>
-      <% for(let choice of choices) { %>
+
+      <h2>Your favorite thing in the world:</h2>
+
       <ul>
-          <li>
-            <input type="radio" id="<%= choice %>" name="selector">
-            <label for="<%= choice %>"><%= choice %></label>
-            <div class="check"><div class="inside"></div></div>
-          </li>
-        </ul>
-        <% } %>
+      <li>
+        <label for="f-option">Pizza</label>
+
+        <div class="check"></div>
+      </li>
+
+      <li>
+        <label for="s-option">Bacon</label>
+
+        <div class="check"><div class="inside"></div></div>
+      </li>
+
+      <li>
+        <input type="radio" id="t-option" name="selector">
+        <label for="t-option">Cats</label>
+
+        <div class="check"><div class="inside"></div></div>
+      </li>
+    </ul>
     <div>
       <button class="vote_button" type="submit">VOTE</button>
     </div>
