@@ -19,7 +19,7 @@
     <%- include('partials/_header') %>
     <main class="new-poll">
       <% if (email) {%>
-        <form action="">
+        <form class="form-inline" action='/poll/new'    method="POST">
           <div class="question">
             <label for="error">
               <p class="error"></p>
@@ -29,9 +29,9 @@
           </div>
           <div class="options">
             <label for="Option">POLL OPTIONS</label>
-            <input type="text" name="options_1" placeholder="Add an Option"></input>
+            <input type="text" name="options" placeholder="Option 1"></input>
             <label for="Question_2"></label>
-            <input type="text" name="options_1" placeholder="Add an Option"></input>
+            <input type="text" name="options" placeholder="Option 2"></input>
           </div>
           <div class="option-counter">
             <button class="new-option" type="button">Add an Option</button>
@@ -44,16 +44,12 @@
           <div>
             <button class="new-email" type="button">Add an Email</button>
           </div>
-          </div>
-          </div>
           <div class="comment">
             <label for="Comment">Comment</label>
             <input type="text" name="comment" placeholder="Add a Comment (optional)"></input>
-            <form class="form-inline" action='/poll/new'    method="POST">
-              <button type="submit">Submit</button>
-            </form>
+            <button type="submit">Submit</button>
           </div>
-        </form>
+          </form>
         <% } else { %>
           <% } %>
     </main>

@@ -17,9 +17,19 @@
 
   <body>
     <%- include('partials/_header') %>
-    <main class="new-poll">
-
-    </main>
+    <main class="poll">
+      <form class="form-inline" action='/vote'    method="POST">
+      <h5><%= pollId %></h5>
+      <dl>
+        <dt>1</dt>
+        <dt>2</dt>
+        <dt>3</dt>
+        <dt>4</dt>
+        <dt><5/dt>
+        <dt>6</dt>
+      </dl>
+</form>
+ </main>
     <%- include('partials/_footer') %>
   </body>
 </html>
