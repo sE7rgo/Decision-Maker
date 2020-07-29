@@ -108,22 +108,26 @@ body, html {
       }
     }
   }
-
-  button {
-    background-color: #0DFF92;
-    margin: 1.5em;
+  div {
     display: flex;
-    border: none;
-    height: 3em;
-    width: 7em;
-    border-radius: 5%;
-    color: #AAAAAA;
-    font-size: x-large;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  button:hover {
-    color: chartreuse;
-    transition: all 0.8s;
+      flex-direction: row-reverse;
+
+    button {
+      background-color: #0DFF92;
+      margin: 1.5em;
+      border: none;
+      height: 3em;
+      width: 7em;
+      border-radius: 5%;
+      color: #3a3737;
+      font-size: x-large;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: chartreuse;
+      transition: all 0.8s;
+    }
+
   }
 }
