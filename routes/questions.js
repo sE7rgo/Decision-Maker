@@ -93,7 +93,6 @@ module.exports = (db) => {
             console.log(body);
           }
         });
-        //res.json({ poll_id });  //feedback for webpage testing
       })
       .catch(err => {
         res
@@ -104,13 +103,13 @@ module.exports = (db) => {
 
   //************************** GET poll from DB for Voter *************************
 
-  router.get("/pollRetrieve/:id", (req, res) => {   //change address as necessary
+  router.get("/pollRetrieve/:id", (req, res) => {
     let query = {
       text: `SELECT questions.poll_code, questions.question_text, choices.choice_text
       FROM questions
       JOIN choices ON choices.poll_code = questions.poll_code
       WHERE poll_code = $1`,
-      values: [req.params.id]  //this is the poll_code entered by voter
+      values: [req.params.id]
     };
     //console.log(query);
     let choices = [];
@@ -121,8 +120,8 @@ module.exports = (db) => {
         for (const row of data.rows) {
           choices.push(row.choice_text); //this is an array with all rankings
         }
-        let templateVars = {email: req.session.user_id, poll_code, question, choices};
-        res.render('poll_show', templateVars);  //change this as you see fit.
+        let templateVars = {email: null, pollId: req.params.pollId, question, choices};
+        res.render("poll_show", templateVars);
       })
       .catch(err => {
         res
