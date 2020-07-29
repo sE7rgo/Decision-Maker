@@ -17,7 +17,7 @@ const { Pool } = require('pg');
 const dbParams = require('./lib/db.js');
 const db = new Pool(dbParams);
 db.connect();
-// Load the logger first so all (static) HTTP requests are logged to STDOUThttps://zen.yandex.ru/media/eda.ru/pochemu-sladkoe-ediat-v-konce-5c363b9580738300aaca6d48
+// Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
@@ -41,14 +41,16 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 
 const userRoutes = require("./routes/user");              //Routes for login/logout
-//const questionsRoutes = require("./routes/questions");    //Routes for DB queries
+const questionsRoutes = require("./routes/questions");    //Routes for DB queries
 const newPollRoutes = require("./routes/new_poll");         //Routes for new polls
 // Mount all resource routes
 app.use(userRoutes);
-app.use(newPollRoutes);
-//app.use('/api', questionsRoutes(db));        //api routes for database queries
+app.use(newPollRoutes(db));
+app.use('/api', questionsRoutes(db));
 
-app.get("/", (req, res) => {
+
+app.get("/", (req, res) => {               //landing page with/without user login
+  console.log(Pool)
   return(req.session.user_id
    ? res.render("index", { email : req.session.user_id})
    : res.render("index", { email : null})
@@ -57,5 +59,10 @@ app.get("/", (req, res) => {
 
 // Server listen
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Example app listening on port ${PORT}`)
+  let result = db.query(`SELECT * FROM choices;`)
+  .then (res => {
+    console.log(res)
+  })
+  console.log('this query', result)
 });

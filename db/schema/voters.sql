@@ -2,6 +2,6 @@ DROP TABLE IF EXISTS voters CASCADE;
 
 CREATE TABLE voters (
   id SERIAL PRIMARY KEY NOT NULL,
-  questions_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
+  poll_code VARCHAR(255) NOT NULL,
   voter_email VARCHAR(255) NOT NULL
 );

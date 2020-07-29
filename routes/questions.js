@@ -8,49 +8,11 @@ const router  = express.Router();
 const {mg} = require('../helper_functions/mailgun');
 
 
-//************************  POST completed poll to Database *****************
-
 module.exports = (db) => {
-
-  router.post("/poll_submit", (req, res) => {
-    let query = 'INSERT INTO...;';
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const poll_submit = data.rows;  console.log(poll_submit);
-        res.json({ poll_submit });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
-
-  //  ************************** POST Voter's Rankings to DB *********************
-
-
-  router.post("/vote_cast/:id", (req, res) => {
-    let query = 'INSERT INTO....;';
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const vote = data.rows;  console.log(vote);
-        res.json({ vote });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
 
   // *****************  Retrieve Poll_code and Mail out to Voters  ***************
 
-
-  router.get("/polls/:id", (req, res) => {
+  router.get("/pollsSend/:id", (req, res) => {  //called by POST/poll_submit
     let query = {
       text: `SELECT creator_email, poll_code, voters.voter_email
              FROM questions
@@ -59,8 +21,8 @@ module.exports = (db) => {
       values: [req.params.id]
     };
     console.log(query);
-    let voterEmails = [];
-    db.query(query)
+    let voterEmails = [];         //THEN statement has loop to gather all voters
+    db.query(query)               //and pushes that to the mailgun input
       .then(data => {
         const poll_id = data.rows[0].poll_code;
         const creatorEmail = data.rows[0].creator_email;
@@ -75,7 +37,7 @@ module.exports = (db) => {
           to: `${creatorEmail}, ${insertVoters}, lord_proton@yahoo.ca`,
           subject: 'Decision-Maker Poll',
           text: `Copy this Polling Code ${poll_id} and click the following link http://localhost:8080/ to go to Decision Maker and vote.`
-        }; console.log('Look here ====>>>>', inputData);
+        };
 
         mg.messages().send(inputData, function(err, body) {
           if (err) {
@@ -84,7 +46,7 @@ module.exports = (db) => {
             console.log(body);
           }
         });
-        res.json({ poll_id });
+        //res.json({ poll_id });
       })
       .catch(err => {
         res
@@ -93,9 +55,60 @@ module.exports = (db) => {
       });
   });
 
-
   // **********************  GET Results and Send to Creator ********************
 
+  router.get("/pollResults/:id", (req, res) => {  //each vote cast, sends an update
+    let query = {
+      text: `SELECT questions.creator_email, questions.poll_code, questions.question_text, choices.choice_text, choices.borda_rank
+      FROM questions
+      JOIN choices ON choices.questions_id = questions.id
+      WHERE poll_code = $1`,
+      values: [req.params.id]
+    };
+    console.log(query);
+    let bordaRank = [];
+    let pollOptions = [];
+    let resultsTally = [];
+    db.query(query)
+      .then(data => {
+        const creatorEmail = data.rows[0].creator_email
+        const poll_id = data.rows[0].poll_code;
+        const questionText = data.rows[0].question_text;
+        for (const row of data.rows) {
+          bordaRank.push(row.borda_rank)
+          pollOptions.push(row.choice_text)
+        }
+        for (let j = 0; j < bordaRank.length; j++) {
+          resultsTally.push(pollOptions[j]);
+          resultsTally.push(bordaRank[j]);
+        }
+        let results = resultsTally.toString();
+        console.log(results);
+        // Mailgun Sendout to Users and Creator  //${creatorEmail}
+        const inputData = {
+          from: 'Decision Maker<graham.l.tyler@gmail.com>',
+          to: `lord_proton@yahoo.ca`,
+          subject: 'Decision-Maker Poll',
+          text: `Current Poll Results for Poll Code: ${poll_id} \n Given by: ${creatorEmail} \n Asked: ${questionText} \n Decision Maker results: ${results}`
+        };
+
+        mg.messages().send(inputData, function(err, body) {
+          if (err) {
+            console.log("got an error: ", err);
+          } else {
+            console.log(body);
+          }
+        });
+        res.json({ poll_id });  //feedback for webpage testing
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  //************************** GET poll from DB for Voter *************************
 
   router.get("/poll_results", (req, res) => {
     let query = 'SELECT ......;';
@@ -111,6 +124,11 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+
+
+
+
 
   //********************  Testing database connection from browswer  ******************
 
@@ -130,15 +148,6 @@ module.exports = (db) => {
       });
   });
 
-
-  // ***********************   GET main page in Browswer  *********************
-
-  router.get("/", (req, res) => {
-    let templateVars = {
-      email: null
-    };
-    res.render("index", templateVars);
-  });
   return router;
 };
 
