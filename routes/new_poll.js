@@ -2,19 +2,8 @@ const express = require('express');
 const router  = express.Router();
 
 const { generateRandomString } = require('../public/scripts/helpers');
-const { query } = require('express');
 
 module.exports = (db) => {
-//***************************  GET the poll page **************************
-
-  router.get("/poll/:pollId", (req, res) => {
-    let templateVars = {
-      email: null,
-      pollId: req.params.pollId
-    };
-    res.render("poll_show", templateVars);
-  });
-
 //***************************  POST new poll ************************************
 
   router.post("/poll/new", (req, res) => {
@@ -36,42 +25,43 @@ module.exports = (db) => {
     .then(res => {
       return res.rows;
     })
-    .then(
-      options.forEach(option => {
-        db.query (`
-          INSERT INTO choices
-          (poll_code,choice_text)
-          VALUES ($1, $2)
-          RETURNING *
-          ;`, [pollId, option])
-        .catch(err => {
-          console.log(err);
-          return null;
-        })
-        .then(res => {
-          return res.rows;
-        })
-      })
-    )
-    .then(
-      email.forEach(user_email => {
-        db.query (`
-        INSERT INTO voters
-        (poll_code, voter_email)
+    .then(() => {
+      return Promise.all(options.map(option => {
+       return db.query(`
+        INSERT INTO choices
+        (poll_code,choice_text)
         VALUES ($1, $2)
         RETURNING *
-        ;`, [pollId, user_email])
+        ;`, [pollId, option])
+        .then(res => {
+          return res.rows;
+        })
         .catch(err => {
           console.log(err);
           return null;
         })
-        .then(res => {
+      }))
+    })
+    .then(() => {
+      return Propmise.all(email.map(user_email => {
+        return db.query (`
+          INSERT INTO voters
+          (poll_code, voter_email)
+          VALUES ($1, $2)
+          RETURNING *
+          ;`, [pollId, user_email])
+          .catch(err => {
+            console.log(err);
+            return null;
+          })
+          .then(res => {
           return res.rows;
-        })
-      })
-    )
-    res.redirect(`/poll/${pollId}`);
-  });
-
+          })
+      }))
+    })
+    .then(()=> {
+      res.redirect(`/poll/${pollId}`);
+    })
+  })
   return router;
 }
