@@ -30,7 +30,7 @@ module.exports = (db) => {
           from: 'Decision Maker<graham.l.tyler@gmail.com>',
           to: `lord_proton@yahoo.ca`,
           subject: 'Decision-Maker Poll',
-          text: `Copy this Polling Code ${poll_id} and click the following link http://localhost:8080/ to go to Decision Maker and vote.`
+          text: `Clicking this link will take you to Decision Maker where ${creatorEmail} has posted a poll that they want you vote on. \n http://localhost:8080/poll/${poll_id}`
         };
 
         mg.messages().send(inputData, function(err, body) {
@@ -104,7 +104,7 @@ module.exports = (db) => {
 
   //************************** GET poll from DB for Voter *************************
 
-  router.get("/poll_results", (req, res) => {   //change address as necessary
+  router.get("/pollRetrieve/:id", (req, res) => {   //change address as necessary
     let query = {
       text: `SELECT questions.poll_code, questions.question_text, choices.choice_text
       FROM questions
