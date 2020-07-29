@@ -16,8 +16,8 @@ const borda = function(rankingsFromDB, voterRankings) {  //these are arrays of r
   let pointsArray = voterRankings;
   let finalArray = [];
   if (rankingsFromDB[0] !== 0) {
-  for (let i = 1; i <= voterRankings.length; (i + 1)) {
-    voterRankings[voterRankings.indexOf(i)] += 1;
+  for (let i = 1; i <= voterRankings.length; i++) {
+    voterRankings[voterRankings.indexOf(i)] += count;
     count --;
   } console.log(voterRankings);
   for (let j = 0; j < pointsArray.length; j++) {
@@ -28,12 +28,6 @@ const borda = function(rankingsFromDB, voterRankings) {  //these are arrays of r
       let initialRanking = voterRankings;
       return initialRanking;
     }
-
 };
-let bordaRankingDB = [1, 3, 2];
-let userRanking = [2, 1, 3];
-console.log(borda(bordaRankingDB, userRanking));
-
-
 
 module.exports = {borda};
