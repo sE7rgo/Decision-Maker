@@ -4,32 +4,51 @@
     <title>Show Poll</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/new-poll.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/poll-show.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
 
   </head>
 
+  <header>
+    <nav>
+      <span class="span">Decision Maker</span>
+    </nav>
+  </header>
   <body>
-    <%- include('partials/_header') %>
-    <main class="poll">
-      <form class="form-inline" action='/vote'    method="POST">
-      <h5><%= pollId %></h5>
-      <dl>
-        <dt>1</dt>
-        <dt>2</dt>
-        <dt>3</dt>
-        <dt>4</dt>
-        <dt><5/dt>
-        <dt>6</dt>
-      </dl>
-</form>
- </main>
-    <%- include('partials/_footer') %>
-  </body>
+    <div class="container">
+
+      <h2>Your favorite thing in the world:</h2>
+
+      <ul>
+      <li>
+        <input type="radio" id="f-option" name="selector">
+        <label for="f-option">Pizza</label>
+
+        <div class="check"></div>
+      </li>
+
+      <li>
+        <input type="radio" id="s-option" name="selector">
+        <label for="s-option">Bacon</label>
+
+        <div class="check"><div class="inside"></div></div>
+      </li>
+
+      <li>
+        <input type="radio" id="t-option" name="selector">
+        <label for="t-option">Cats</label>
+
+        <div class="check"><div class="inside"></div></div>
+      </li>
+    </ul>
+    <button class="vote_button" type="submit">VOTE</button>
+    </form>
+    </div>
+</body>
+<%- include('partials/_footer') %>
 </html>
