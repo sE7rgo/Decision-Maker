@@ -5,7 +5,8 @@ const { generateRandomString } = require('../public/scripts/helpers');
 const { query } = require('express');
 
 module.exports = (db) => {
-/* render the poll page */
+//***************************  GET the poll page **************************
+
   router.get("/poll/:pollId", (req, res) => {
     let templateVars = {
       email: null,
@@ -14,7 +15,8 @@ module.exports = (db) => {
     res.render("poll_show", templateVars);
   });
 
-/* create new poll */
+//***************************  POST new poll ************************************
+
   router.post("/poll/new", (req, res) => {
     const pollId = generateRandomString(6);
     const creator_email = req.session.user_id;
