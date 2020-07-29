@@ -1,8 +1,3 @@
-
-// *********  All routes for Database are defined here **************
-
-// **********  These have only been roughed out, they are not complete ******
-
 const express = require('express');
 const router  = express.Router();
 const {mg} = require('../helper_functions/mailgun');
@@ -12,15 +7,14 @@ module.exports = (db) => {
 
   // *****************  Retrieve Poll_code and Mail out to Voters  ***************
 
-  router.get("/pollsSend/:id", (req, res) => {  //called by POST/poll_submit
+  router.get("/pollSend/:id", (req, res) => {  //called by POST/poll_submit
     let query = {
-      text: `SELECT creator_email, poll_code, voters.voter_email
-             FROM questions
-             JOIN voters ON voters.questions_id = questions.id
-             WHERE poll_code = $1`,
+      text: `SELECT questions.creator_email, questions.poll_code, voters.voter_email FROM questions
+      JOIN voters ON voters.poll_code = questions.poll_code
+      WHERE voters.poll_code = $1`,
       values: [req.params.id]
     };
-    console.log(query);
+    //console.log(query);
     let voterEmails = [];         //THEN statement has loop to gather all voters
     db.query(query)               //and pushes that to the mailgun input
       .then(data => {
@@ -31,10 +25,10 @@ module.exports = (db) => {
         }
         let insertVoters = voterEmails.toString().replace(/,/g, ', ');
 
-        // Mailgun Sendout to Users and Creator
+        // Mailgun Sendout to Users and Creator  ${creatorEmail}, ${insertVoters}
         const inputData = {
           from: 'Decision Maker<graham.l.tyler@gmail.com>',
-          to: `${creatorEmail}, ${insertVoters}, lord_proton@yahoo.ca`,
+          to: `lord_proton@yahoo.ca`,
           subject: 'Decision-Maker Poll',
           text: `Copy this Polling Code ${poll_id} and click the following link http://localhost:8080/ to go to Decision Maker and vote.`
         };
@@ -61,11 +55,11 @@ module.exports = (db) => {
     let query = {
       text: `SELECT questions.creator_email, questions.poll_code, questions.question_text, choices.choice_text, choices.borda_rank
       FROM questions
-      JOIN choices ON choices.questions_id = questions.id
-      WHERE poll_code = $1`,
+      JOIN choices ON choices.poll_code = questions.poll_code
+      WHERE questions.poll_code = $1`,
       values: [req.params.id]
     };
-    console.log(query);
+    //console.log(query);
     let bordaRank = [];
     let pollOptions = [];
     let resultsTally = [];
@@ -83,8 +77,8 @@ module.exports = (db) => {
           resultsTally.push(bordaRank[j]);
         }
         let results = resultsTally.toString();
-        console.log(results);
-        // Mailgun Sendout to Users and Creator  //${creatorEmail}
+        //console.log(results);
+        // Mailgun Sendout to Users and Creator  //re-install ${creatorEmail}
         const inputData = {
           from: 'Decision Maker<graham.l.tyler@gmail.com>',
           to: `lord_proton@yahoo.ca`,
@@ -110,17 +104,15 @@ module.exports = (db) => {
 
   //************************** GET poll from DB for Voter *************************
 
-  //Sergii, I have set this up for you, change it to meet your needs.
-
   router.get("/poll_results", (req, res) => {   //change address as necessary
     let query = {
       text: `SELECT questions.poll_code, questions.question_text, choices.choice_text
       FROM questions
-      JOIN choices ON choices.questions_id = questions.id
+      JOIN choices ON choices.poll_code = questions.poll_code
       WHERE poll_code = $1`,
       values: [req.params.id]  //this is the poll_code entered by voter
     };
-    console.log(query);
+    //console.log(query);
     let choices = [];
     db.query(query)
       .then(data => {
@@ -144,10 +136,10 @@ module.exports = (db) => {
 
   router.get("/questions", (req, res) => {
     let query = 'SELECT * FROM questions;';
-    console.log(query);
+    //console.log(query);
     db.query(query)
       .then(data => {
-        const questions = data.rows;  console.log(questions);
+        const questions = data.rows;
         res.json({ questions });
       })
       .catch(err => {
