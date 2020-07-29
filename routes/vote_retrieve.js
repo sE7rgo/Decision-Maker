@@ -20,14 +20,14 @@ module.exports = (db) => {
       WHERE poll_code = $1`,
       values: [req.params.id]
     };
-    db.query(query)
+    db.query(query)                 //initiate query to fetch old ranking data
       .then(data => {
         for (const row of data.rows) {
           oldRankings.push(row.borda_rank);
         }
-        updatedPoints = borda(oldRankings, newRankings);
+        updatedPoints = borda(oldRankings, newRankings); //call borda method
 
-        const promises = options.map((option) => {
+        const promises = options.map((option) => {  //conduct update of rankings
           return db.query(`
           UPDATE choices
           SET borda_rank = $1
