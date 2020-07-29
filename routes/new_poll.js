@@ -9,7 +9,7 @@ module.exports = (db) => {
 
 //>>>>>>>>>>>>> Sergii, you can delete this one <<<<<<<<<<<<<<<
 //>>>>>>>>>>>  Look in questions routes and you'll see it <<<<<<<
-//>>>>>>>>>>>  In the html it will require a for loop to populate the choices <<<<
+//>>>>>>>>>>>  In the html it will require a for loop to populate the choices <<
 
   router.get("/poll/:pollId", (req, res) => {
     let templateVars = {
