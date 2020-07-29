@@ -10,8 +10,8 @@ module.exports = (db) => {
     const pollId = generateRandomString(6);
     const creator_email = req.session.user_id;
     const { question, options, email, comment } = req.body;
-
     const values = [creator_email, question, pollId];
+
     db.query (`
       INSERT INTO questions
       (creator_email, question_text, poll_code)

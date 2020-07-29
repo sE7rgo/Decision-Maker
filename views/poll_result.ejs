@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Edit Poll</title>
+
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/poll-show.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+
+  </head>
+
+  <header>
+    <nav>
+      <span class="span">Decision Maker</span>
+    </nav>
+  </header>
+  <body>
+    <div class="container">
+
+      <h2>Your favorite thing in the world:</h2>
+
+      <ul>
+      <li>
+        <label for="f-option">Pizza</label>
+
+        <div class="check"></div>
+      </li>
+
+      <li>
+        <label for="s-option">Bacon</label>
+
+        <div class="check"><div class="inside"></div></div>
+      </li>
+
+      <li>
+        <input type="radio" id="t-option" name="selector">
+        <label for="t-option">Cats</label>
+
+        <div class="check"><div class="inside"></div></div>
+      </li>
+    </ul>
+    <div>
+      <button class="vote_button" type="submit">VOTE</button>
+    </div>
+    </form>
+    </div>
+</body>
+<%- include('partials/_footer') %>
+</html>
