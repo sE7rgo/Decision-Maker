@@ -11,23 +11,23 @@ module.exports = (db) => {
     let newRankings = [];
     let oldRankings = [];
     let updatedPoints = [];
-    for (const rank of borda_rank) {
+    for (const rank of borda_rank) {  //compile new Rankings from page
       newRankings.push(rank);
     }
-    let query = {              //retrieve old rankings for choices from DB
+    let query = {
       text: `SELECT borda_rank
       FROM choices
       WHERE poll_code = $1`,
       values: [req.params.id]
     };
-    db.query(query)                 //initiate query to fetch old ranking data
+    db.query(query)               //initiate query to fetch old rankings fm DB
       .then(data => {
         for (const row of data.rows) {
           oldRankings.push(row.borda_rank);
         }
         updatedPoints = borda(oldRankings, newRankings); //call borda method
 
-        const promises = options.map((option) => {  //conduct update of rankings
+        const promises = options.map((option) => {  //conduct update of rankings in DB
           return db.query(`
           UPDATE choices
           SET borda_rank = $1
