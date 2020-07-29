@@ -7,10 +7,6 @@ const { query } = require('express');
 module.exports = (db) => {
 //***************************  GET the poll page **************************
 
-//>>>>>>>>>>>>> Sergii, you can delete this one <<<<<<<<<<<<<<<
-//>>>>>>>>>>>  Look in questions routes and you'll see it <<<<<<<
-//>>>>>>>>>>>  In the html it will require a for loop to populate the choices <<
-
   router.get("/poll/:pollId", (req, res) => {
     let templateVars = {
       email: null,
@@ -25,8 +21,8 @@ module.exports = (db) => {
     const pollId = generateRandomString(6);
     const creator_email = req.session.user_id;
     const { question, options, email, comment } = req.body;
-
     const values = [creator_email, question, pollId];
+
     db.query (`
       INSERT INTO questions
       (creator_email, question_text, poll_code)
