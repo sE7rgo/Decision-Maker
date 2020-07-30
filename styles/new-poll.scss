@@ -30,7 +30,6 @@
     font-size: large;
     border: none;
     background-color: transparent;
-    padding-bottom: 2em;
     color: blue;
     overflow: hidden;
     cursor: pointer;
@@ -51,6 +50,14 @@
 
 
   .option-counter {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  .email-counter {
     display: flex;
     align-items: flex-start;
     flex-direction: column;

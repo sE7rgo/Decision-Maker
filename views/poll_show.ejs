@@ -10,8 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/public/scripts/drag-drop.js"></script>
-
   </head>
 
   <header>
@@ -23,20 +21,22 @@
     <form class="form-inline" action="/poll/new"    method="POST">
       <div class="container">
         <h2><%= question %></h2>
+        <ul id="<%=pollId%>">
         <% for(let choice of choices) { %>
-        <ul>
-          <li id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-            <input type="radio" id="<%= choice %>" name="selector" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <label for="<%= choice %>" draggable="true" ondragstart="drag(event)"><%= choice %></label>
-          </li>
-        </ul>
-        <% } %>
-      <div>
-        <button class="vote_button" type="submit">VOTE</button>
-      </div>
-    </div>
-    </form>
-</body>
-<%- include('partials/_footer') %>
+            <li>
+              <input class="vote" type="radio" id="<%= choice %>" name="selector">
+              <label for="<%= choice %>" ><%= choice %></label>
+              <div class="check"><div class="inside"></div></div>
+              <output name="rank" for="<%= choice %>"></output>
+            </li>
+            <% } %>
+          </ul>
+          <div>
+            <button class="vote_button" type="submit">VOTE</button>
+          </div>
+        </div>
+      </form>
+    </body>
+    <%- include('partials/_footer') %>
+    <script type="text/javascript" src="/scripts/vote-ranking.js"></script>
 </html>
