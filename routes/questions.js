@@ -53,7 +53,7 @@ module.exports = (db) => {
   });
 */
   // **********************  GET Results and Send to Creator ********************
-
+/*
   router.get("/pollResults/:id", (req, res) => {  //each vote cast, sends an update
     let query = {
       text: `SELECT questions.creator_email, questions.poll_code, questions.question_text, choices.choice_text, choices.borda_rank
@@ -103,7 +103,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
+*/
   //************************** GET poll from DB for Voter *************************
 
   /*router.get("/pollRetrieve/:id", (req, res) => {
