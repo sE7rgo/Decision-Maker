@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Edit Poll</title>
+    <title>Show Poll</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/styles/poll-show.css" type="text/css" />
@@ -19,36 +19,23 @@
       <span class="span">Decision Maker</span>
     </nav>
   </header>
-  <body>
-    <div class="container">
-
-      <h2>Your favorite thing in the world:</h2>
-
-      <ul>
-      <li>
-        <label for="f-option">Pizza</label>
-
-        <div class="check"></div>
-      </li>
-
-      <li>
-        <label for="s-option">Bacon</label>
-
-        <div class="check"><div class="inside"></div></div>
-      </li>
-
-      <li>
-        <input type="radio" id="t-option" name="selector">
-        <label for="t-option">Cats</label>
-
-        <div class="check"><div class="inside"></div></div>
-      </li>
-    </ul>
-    <div>
-      <button class="vote_button" type="submit">VOTE</button>
-    </div>
-    </form>
-    </div>
-</body>
-<%- include('partials/_footer') %>
+  <main>
+    <h2><%= question %></h2>
+    <table class="table"></table>
+      <thead>
+        <tr>
+          <th scope="col">Choices</th>
+          <th scope="col">Votes</th>
+        </tr>
+      </thead>
+    <tbody>
+      <% for(let choice of choices) { %>
+        <tr>
+          <td><%= choice %></td>
+          <td>%= votes %></td>
+        </tr>
+      <% } %>
+    </tbody>
+      <%- include('partials/_footer') %>
+  </main>
 </html>
