@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/public/scripts/drag-drop.js"></script>
 
   </head>
 
@@ -20,15 +20,15 @@
     </nav>
   </header>
   <body>
-    <form class="form-inline" action="/vote/new"    method="POST">
+    <form class="form-inline" action="/poll/new"    method="POST">
       <div class="container">
         <h2><%= question %></h2>
         <% for(let choice of choices) { %>
         <ul>
-          <li>
-            <input type="radio" id="<%= choice %>" name="selector">
-            <label for="<%= choice %>"><%= choice %></label>
-            <div class="check"><div class="inside"></div></div>
+          <li id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+            <input type="radio" id="<%= choice %>" name="selector" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <label for="<%= choice %>" draggable="true" ondragstart="drag(event)"><%= choice %></label>
           </li>
         </ul>
         <% } %>
@@ -36,7 +36,7 @@
         <button class="vote_button" type="submit">VOTE</button>
       </div>
     </div>
-  </form>
+    </form>
 </body>
 <%- include('partials/_footer') %>
 </html>
