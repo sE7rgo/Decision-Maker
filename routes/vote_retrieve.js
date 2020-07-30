@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const {borda} = require('../helper_functions/borda');
+const {mg} = require('../helper_functions/mailgun');
 
 module.exports = (db) => {
 
