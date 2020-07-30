@@ -4,8 +4,11 @@ const {mg} = require('../helper_functions/mailgun');
 
 
 module.exports = (db) => {
-
+/*
   // *****************  Retrieve Poll_code and Mail out to Voters  ***************
+
+  // *** This is has all been put into the new_poll page, so that it acts primarily as a function which is called by .then statement and acts as another query in the chain and enables the POST function to then redirect the user to the voting page.
+
 
   router.get("/pollSend/:id", (req, res) => {  //called by POST/poll_submit
     let query = {
@@ -48,7 +51,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
+*/
   // **********************  GET Results and Send to Creator ********************
 
   router.get("/pollResults/:id", (req, res) => {  //each vote cast, sends an update
@@ -103,7 +106,7 @@ module.exports = (db) => {
 
   //************************** GET poll from DB for Voter *************************
 
-  router.get("/pollRetrieve/:id", (req, res) => {
+  /*router.get("/pollRetrieve/:id", (req, res) => {
     let query = {
       text: `SELECT questions.poll_code, questions.question_text, choices.choice_text
       FROM questions
@@ -129,7 +132,7 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
-
+*/
   //********************  Testing database connection from browswer  ******************
 
 

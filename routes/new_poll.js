@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const {mg} = require('../helper_functions/mailgun');
 
 const { generateRandomString } = require('../public/scripts/helpers');
 
@@ -9,7 +10,7 @@ module.exports = (db) => {
   router.post("/poll/new", (req, res) => {
     const pollId = generateRandomString(6);
     const creator_email = req.session.user_id;
-    const { question, options, email, comment } = req.body;
+    const { question, options, emails, comment } = req.body;
     const values = [creator_email, question, pollId];
 
     db.query (`
@@ -43,7 +44,7 @@ module.exports = (db) => {
       }))
     })
     .then(() => {
-      return Promise.all(email.map(user_email => {
+      return Promise.all(emails.map(user_email => {
         return db.query (`
           INSERT INTO voters
           (poll_code, voter_email)
@@ -60,7 +61,47 @@ module.exports = (db) => {
       }))
     })
     .then(()=> {
-      res.redirect(`/poll/${pollId}`);
+      let query = {
+        text: `SELECT questions.creator_email, questions.poll_code, voters.voter_email FROM questions
+        JOIN voters ON voters.poll_code = questions.poll_code
+        WHERE voters.poll_code = $1`,
+        values: [pollId]
+      };
+      //console.log(query);
+      let voterEmails = [];         //THEN statement has loop to gather all voters
+      db.query(query)               //and pushes that to the mailgun input
+        .then(data => {
+          console.log({data});
+          const poll_id = data.rows[0].poll_code;
+          const creatorEmail = data.rows[0].creator_email;
+          for (const row of data.rows) {
+            voterEmails.push(row.voter_email);
+          }
+          let insertVoters = voterEmails.toString().replace(/,/g, ', ');
+
+          // Mailgun Sendout to Users and Creator  ${creatorEmail}, ${insertVoters}
+          const inputData = {
+            from: 'Decision Maker<graham.l.tyler@gmail.com>',
+            to: `${creatorEmail}, ${insertVoters}`,
+            subject: 'Decision-Maker Poll',
+            text: `Clicking this link will take you to Decision Maker where ${creatorEmail} has posted a poll that they want you vote on. \n http://localhost:8080/poll/${poll_id}`
+          };
+
+          mg.messages().send(inputData, function(err, body) {
+            if (err) {
+              console.log("got an error: ", err);
+            } else {
+              console.log(body);
+      res.redirect(`/poll/${pollId}`);  //need to add call to mailgun mailout to voters
+            }
+          });
+          //res.json({ poll_id });  //just for testing
+        })
+        .catch(err => {
+          res
+            .status(500)
+            .json({ error: err.message });
+        });
     })
   })
   return router;
