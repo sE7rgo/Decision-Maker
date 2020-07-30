@@ -7,8 +7,7 @@ module.exports = (db) => {
   //***************************  GET the poll page **************************
 
   router.get("/poll/:pollId", (req, result) => {
-  //  let question_text;
-  //   let choices_text = [];
+
     db.query (`
       SELECT question_text, choice_text
       FROM questions
@@ -22,7 +21,6 @@ module.exports = (db) => {
       .then(res => {
         let question_text = res.rows[0].question_text;
         let choices_text = res.rows.map(({choice_text}) => choice_text);
-
         let templateVars = {
           question: question_text,
           pollId: req.params.pollId,

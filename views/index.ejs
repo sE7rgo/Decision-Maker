@@ -40,10 +40,13 @@
           </div>
           <div class="emails">
             <label for="emails">WHOM ARE YOU ASKING?</label>
-            <input type="email" name="email" placeholder="Add an email"></input>
+            <input type="email" name="email[]" placeholder="Add an email"></input>
+            <input type="email" name="email[]" placeholder="Add an email"></input>
           </div>
-          <div>
+          <div class="email-counter">
             <button class="new-email" type="button">Add an Email</button>
+            <output name="email-count" for="Email-number">
+            </output>
           </div>
           <div class="comment">
             <label for="Comment">Comment</label>

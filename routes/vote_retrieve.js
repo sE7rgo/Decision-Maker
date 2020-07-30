@@ -7,6 +7,7 @@ module.exports = (db) => {
   //*********************  POST vote to DB  *********************************
 
   router.post("/vote/new", (req, res) => {
+    console.log('this is reqbody.........',req.body)
     const { options, poll_code, borda_rank } = req.body;
     let newRankings = [];
     let oldRankings = [];
