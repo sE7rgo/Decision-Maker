@@ -9,7 +9,7 @@ const createOption = (() => {
 
 const createEmail = (() => {
   const email = `<div class="email">
-  <input type="text" name="email" placeholder="Add an email"></input>
+  <input type="text" name="emails[]" placeholder="Add an email"></input>
   </div>`
   return email
 })
