@@ -68,8 +68,8 @@ module.exports = (db) => {
         values: [pollId]
       };
       //console.log(query);
-      let voterEmails = [];         //THEN statement has loop to gather all voters
-      db.query(query)               //and pushes that to the mailgun input
+      let voterEmails = [];
+      db.query(query)
         .then(data => {
           console.log({data});
           const poll_id = data.rows[0].poll_code;
