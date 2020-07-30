@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Show Poll</title>
+    <title>Poll Result</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/poll-show.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/poll-result.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Syncopate&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-
   </head>
 
   <header>
@@ -19,23 +18,23 @@
       <span class="span">Decision Maker</span>
     </nav>
   </header>
-  <main>
-    <h2><%= question %></h2>
-    <table class="table"></table>
-      <thead>
-        <tr>
-          <th scope="col">Choices</th>
-          <th scope="col">Votes</th>
-        </tr>
-      </thead>
-    <tbody>
-      <% for(let choice of choices) { %>
-        <tr>
-          <td><%= choice %></td>
-          <td>%= votes %></td>
-        </tr>
-      <% } %>
-    </tbody>
-      <%- include('partials/_footer') %>
-  </main>
+  <body>
+    <form class="form-inline" action="/poll/new"    method="POST">
+      <div class="container">
+        <h2><%= question %></h2>
+        <ul id="<%=pollId%>">
+        <% for(let choice in choices) { %>
+            <li>
+              <label for="choice" ><%= choice %></label>
+              <div class="w3-light-grey w3-small">
+                <div class="w3-container w3-green"style="width:40%"><%= choices[choice].rank %></div>
+              </div>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </form>
+    </body>
+    <%- include('partials/_footer') %>
+    <script type="text/javascript" src="/scripts/vote-ranking.js"></script>
 </html>
