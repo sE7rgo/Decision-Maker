@@ -1,7 +1,7 @@
 /* Create an option HTML */
 const createOption = (() => {
   const option = `<div class="option"></div>
-  <input type="text" name="options_1" placeholder="Add an Option"></input>
+  <input type="text" name="options[]" placeholder="Add an Option"></input>
   </div>`
   return option;
 });
