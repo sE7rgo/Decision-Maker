@@ -92,10 +92,9 @@ module.exports = (db) => {
               console.log("got an error: ", err);
             } else {
               console.log(body);
-      res.redirect(`/poll/${pollId}`);  //need to add call to mailgun mailout to voters
+      res.redirect(`/poll/${pollId}`);
             }
           });
-          //res.json({ poll_id });  //just for testing
         })
         .catch(err => {
           res
