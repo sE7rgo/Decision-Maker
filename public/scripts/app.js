@@ -1,7 +1,7 @@
 /* Create an option HTML */
 const createOption = (() => {
   const option = `<div class="option"></div>
-  <input type="text" name="options[]" placeholder="another option"></input>
+  <input type="text" name="options[]" placeholder="Add an Option"></input>
   </div>`
   return option;
 });
@@ -9,7 +9,7 @@ const createOption = (() => {
 
 const createEmail = (() => {
   const email = `<div class="email">
-  <input type="text" name="email[]" placeholder="Add an email"></input>
+  <input type="text" name="emails[]" placeholder="Add an email"></input>
   </div>`
   return email
 })
