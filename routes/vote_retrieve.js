@@ -1,11 +1,11 @@
 const express = require('express');
 const router  = express.Router();
-const {borda} = require('../helper_functions/borda');
+//const {borda} = require('../helper_functions/borda');
 const {mg} = require('../helper_functions/mailgun');
 
 module.exports = (db) => {
 
-  //*********************  POST vote to DB  *********************************
+  //*********************  POST the Rankings to the DB  ***************************
 
   router.post("/vote/new", (req, res) => {
     console.log('this is reqbody.........',req.body.borda_rank);
@@ -19,7 +19,7 @@ module.exports = (db) => {
       WHERE poll_code = $1`,
       values: [poll_code]
     };
-    db.query(query)               //initiate query to fetch old rankings fm DB
+    db.query(query)
       .then(data => {
         for (const row of data.rows) {
           oldRankings.push({choice_text: row.choice_text,

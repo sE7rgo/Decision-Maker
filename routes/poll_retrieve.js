@@ -1,6 +1,8 @@
 const express = require('express');
-const questions = require('./questions');
+//const questions = require('./questions');
 const router  = express.Router();
+
+//************************ GET to retrieve poll results and display them *********
 
 module.exports = (db) => {
 
