@@ -12,7 +12,7 @@ module.exports = (db) => {
     const creator_email = req.session.user_id;
     const { question, options, emails, comment } = req.body;
     const values = [creator_email, question, pollId];
-                        console.log(question);
+                        console.log('LOOK HERE >>>>>>>>>',creator_email);
     db.query (`
       INSERT INTO questions
       (creator_email, question_text, poll_code)
@@ -73,7 +73,7 @@ module.exports = (db) => {
         .then(data => {
           console.log({data});
           const poll_id = data.rows[0].poll_code;
-          const creatorEmail = data.rows[0].creator_email;
+          const creatorEmail = req.session.user_id
           for (const row of data.rows) {
             voterEmails.push(row.voter_email);
           }
@@ -92,7 +92,7 @@ module.exports = (db) => {
               console.log("got an error: ", err);
             } else {
               console.log(body);
-      res.redirect(`/`);
+              res.redirect(`/pollResults/${pollId}`);
             }
           });
         })
@@ -102,9 +102,9 @@ module.exports = (db) => {
             .json({ error: err.message });
         });
       })
-    .then(()=> {
-      res.redirect(`/pollResults/${pollId}`);
-    })
+    //.then(()=> {
+     // res.send(alert("Poll Sent"))      //redirect(`/pollResults/${pollId}`);
+
   })
   return router;
 }
