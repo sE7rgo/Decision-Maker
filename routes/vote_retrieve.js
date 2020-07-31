@@ -80,13 +80,14 @@ module.exports = (db) => {
                     console.log("got an error: ", err);
                   } else {
                     console.log(body);
+                    res.redirect(`/pollResults/${poll_code}`);
                   }
                 });
               })
 
-              .then(()=> {
-                res.redirect(`/pollResults/${poll_code}`);
-              });
+              //.then(()=> {
+               // res.redirect(`/pollResults/${poll_code}`);
+              //});
           })
           .catch(err => {
             res

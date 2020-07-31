@@ -4,7 +4,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  //***************************  GET the Polling Page Ready for Voter ***********
+  //******************  GET the Polling Page Ready for Voter **********************
 
   router.get("/poll/:pollId", (req, result) => {
   //  let question_text;

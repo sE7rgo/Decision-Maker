@@ -5,7 +5,8 @@ const {mg} = require('../helper_functions/mailgun');
 const { generateRandomString } = require('../public/scripts/helpers');
 
 module.exports = (db) => {
-//***************************  POST new poll ************************************
+
+//***************  POST Newly Created Poll to DB and Email Users ***************
 
   router.post("/poll/new", (req, res) => {
     const pollId = generateRandomString(6);
