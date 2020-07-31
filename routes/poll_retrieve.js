@@ -1,6 +1,8 @@
 const express = require('express');
-const questions = require('./questions');
+//const questions = require('./questions');
 const router  = express.Router();
+
+//************** GET: Retrieve poll results and display them *********************
 
 module.exports = (db) => {
 
@@ -27,10 +29,10 @@ module.exports = (db) => {
         for (let j = 0; j < bordaRank.length; j++) {
           // resultsTally.push(pollOptions[j]);
           // resultsTally.push(bordaRank[j]);
-          options[pollOptions[j]] = {rank: bordaRank[j]}
+          options[pollOptions[j]] = {rank: bordaRank[j]};
         }
         let results = resultsTally.toString();
-        console.log(options)
+        console.log(options);
         // // Mailgun Sendout to Users and Creator  //re-install ${creatorEmail}
         // const inputData = {
         //   from: 'Decision Maker<graham.l.tyler@gmail.com>',

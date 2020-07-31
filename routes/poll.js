@@ -1,10 +1,10 @@
 const express = require('express');
-const questions = require('./questions');
+//const questions = require('./questions');
 const router  = express.Router();
 
 module.exports = (db) => {
 
-  //***************************  GET the poll page **************************
+  //******************  GET the Polling Page Ready for Voter **********************
 
   router.get("/poll/:pollId", (req, result) => {
   //  let question_text;

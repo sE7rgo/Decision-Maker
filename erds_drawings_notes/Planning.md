@@ -21,10 +21,10 @@
 - All will enter code on webpage and then they will enter their rankings.
 - After each submission, I will get an email update of the current vote outcome.
 
-- STRETCH =====>>>>    I am able to add an extra email row 
-- STRETCH =====>>>>    I can see detailed poll results
 - STRETCH =====>>>>    Build user profiles with secure login
 - STRETCH =====>>>>    See graphical representation of voting results
+- STRETCH =====>>>>    I as the creator of the poll want to add a comment
+- STRETCH =====>>>>    Poll will allow each voter, only 1 vote
 
 ## ERD
 
