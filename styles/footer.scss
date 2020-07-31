@@ -1,7 +1,10 @@
 footer {
   display: flex;
   justify-content: flex-end;
+  padding: 2em;
   height: 3em;
   margin-top: 10em;
-  width: 100vw;
+  width: 100%;
+  position: relative;
+  color: green;
 }

@@ -4,7 +4,9 @@ header {
   background-color: #0066e3;
   background-image: url("https://www.transparenttextures.com/patterns/light-wool.png");
   height: 13vw;
-  width: 100vw;
+  width: 100%;
+  z-index: 100;
+
 
   nav {
     display: flex;
@@ -13,6 +15,8 @@ header {
     padding: 2em;
     font-family: 'Monoton', cursive;
     font-size: x-large;
+    width: 100%;
+
     div {
       font-family: 'Amatic SC', cursive;
     }
