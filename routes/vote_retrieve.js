@@ -80,7 +80,7 @@ module.exports = (db) => {
                     console.log("got an error: ", err);
                   } else {
                     console.log(body);
-                    res.redirect(`/pollResults/${poll_code}`);
+                    res.redirect(`/pollResults/${poll_code}`);  //moved redirect
                   }
                 });
               })
