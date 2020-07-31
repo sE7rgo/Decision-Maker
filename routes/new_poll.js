@@ -12,7 +12,7 @@ module.exports = (db) => {
     const creator_email = req.session.user_id;
     const { question, options, emails, comment } = req.body;
     const values = [creator_email, question, pollId];
-                        console.log(req.body);
+                        console.log(question);
     db.query (`
       INSERT INTO questions
       (creator_email, question_text, poll_code)

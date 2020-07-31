@@ -8,33 +8,46 @@ module.exports = (db) => {
   //*********************  POST vote to DB  *********************************
 
   router.post("/vote/new", (req, res) => {
-    console.log('this is reqbody.........',req.body)
+    console.log('this is reqbody.........',req.body.borda_rank);
     const { options, poll_code, borda_rank } = req.body;
+    let newChoices = req.body.borda_rank;
     let newRankings = [];
     let oldRankings = [];
+    let oldChoices = [];
     let updatedPoints = [];
-    for (const rank of borda_rank) {  //compile new Rankings from page
-      newRankings.push(rank);
-    }
+
     let query = {
-      text: `SELECT borda_rank
+      text: `SELECT borda_rank, choice_text
       FROM choices
       WHERE poll_code = $1`,
-      values: [req.params.id]
+      values: [poll_code]
     };
     db.query(query)               //initiate query to fetch old rankings fm DB
       .then(data => {
         for (const row of data.rows) {
-          oldRankings.push(row.borda_rank);
+         // oldRankings.push(row.borda_rank);
+          oldRankings.push({choice_text: row.choice_text,
+          borda_rank: row.borda_rank});
+          //oldChoices.push(row.choice_text);
         }
-        updatedPoints = borda(oldRankings, newRankings); //call borda method
+        //for (const choice of oldChoices) {
+         // newRankings.push(newChoices.indexOf(choice) + 1);
 
-        const promises = options.map((option) => {  //conduct update of rankings in DB
+        //}console.log(newRankings);
+
+        for (const index in newChoices) {
+          const x = oldRankings.find(item => item.choice_text === newChoices[index])
+          x.borda_rank = x.borda_rank + (newChoices.length - index);
+        }
+
+       // updatedPoints = borda(oldRankings, newRankings); //call borda method
+
+        const promises = oldRankings.map((option) => {  //conduct update rankings in DB
           return db.query(`
           UPDATE choices
           SET borda_rank = $1
           WHERE poll_code = $2 AND choice_text = $3
-          ;`, [updatedPoints, poll_code, option])
+          ;`, [option.borda_rank, poll_code, option.choice_text])
         })
         Promise.all(promises)         //() => res.send('successful update'));
         .then(()=> {  //****************spliced in fm questions.js *************

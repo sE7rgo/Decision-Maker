@@ -18,7 +18,9 @@
     </nav>
   </header>
   <body>
-    <form class="form-inline" action="/poll/new"    method="POST">
+    <form class="form-inline" action="/vote/new" method="POST" id="pollForm">
+
+      <input type="hidden" name="pollId" value="<%= pollId %>">
       <div class="container">
         <h2><%= question %></h2>
         <ul id="<%=pollId%>">
