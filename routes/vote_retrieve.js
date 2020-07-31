@@ -7,7 +7,7 @@ module.exports = (db) => {
 
   //*********************  POST vote to DB  *********************************
 
-  router.post("/vote/new", (req, res) => {
+  router.post("/vote/new", (req, result) => {
     console.log('this is reqbody.........',req.body.borda_rank);
     const { options, poll_code, borda_rank } = req.body;
     let newChoices = req.body.borda_rank;
@@ -94,18 +94,16 @@ module.exports = (db) => {
                 }
               });
             })
-
-            .then(()=> {
-              res.redirect(`/pollResults/${poll_code}`);
-            })
           })
-            .catch(err => {
-              res
-                .status(500)
-                .json({ error: err.message });
-            });
+          .catch(err => {
+            res
+              .status(500)
+              .json({ error: err.message });
+          })
         })
-      });
-
+      .then(()=> {
+        result.redirect(`/pollResults/${poll_code}`);
+      })
+  });
   return router;
 };
