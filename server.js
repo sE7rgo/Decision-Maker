@@ -45,12 +45,14 @@ const questionsRoutes = require("./routes/questions");    //Routes for DB querie
 const newPollRoutes = require("./routes/new_poll");         //Routes for new polls
 const pollRoutes = require("./routes/poll");
 const voteRetrieve = require("./routes/vote_retrieve");
+const pollRetrieve = require("./routes/poll_retrieve");
 // Mount all resource routes
 app.use(userRoutes);
 app.use(newPollRoutes(db));
 app.use(pollRoutes(db));
 app.use('/api', questionsRoutes(db));
 app.use(voteRetrieve(db));
+app.use(pollRetrieve(db));
 
 
 app.get("/", (req, res) => {               //landing page with/without user login

@@ -101,6 +101,9 @@ module.exports = (db) => {
             .status(500)
             .json({ error: err.message });
         });
+      })
+    .then(()=> {
+      res.redirect(`/pollResults/${pollId}`);
     })
   })
   return router;
