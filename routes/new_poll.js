@@ -12,7 +12,7 @@ module.exports = (db) => {
     const creator_email = req.session.user_id;
     const { question, options, emails, comment } = req.body;
     const values = [creator_email, question, pollId];
-                        console.log('LOOK HERE >>>>>>>>>',creator_email);
+
     db.query (`
       INSERT INTO questions
       (creator_email, question_text, poll_code)
@@ -102,8 +102,7 @@ module.exports = (db) => {
             .json({ error: err.message });
         });
       })
-    //.then(()=> {
-     // res.send(alert("Poll Sent"))      //redirect(`/pollResults/${pollId}`);
+
 
   })
   return router;
