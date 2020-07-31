@@ -49,14 +49,15 @@ module.exports = (db) => {
           WHERE poll_code = $2 AND choice_text = $3
           ;`, [option.borda_rank, poll_code, option.choice_text])
         })
-        Promise.all(promises)         //() => res.send('successful update'));
-        .then(()=> {  //****************spliced in fm questions.js *************
+        Promise.all(promises)
+
+        .then(()=> {
           let query = {
             text: `SELECT questions.creator_email, questions.poll_code, questions.question_text, choices.choice_text, choices.borda_rank
             FROM questions
             JOIN choices ON choices.poll_code = questions.poll_code
             WHERE questions.poll_code = $1`,
-            values: [req.params.id]
+            values: [poll_code]
           };
           //console.log(query);
           let bordaRank = [];
@@ -80,7 +81,7 @@ module.exports = (db) => {
               // Mailgun Sendout to Users and Creator  //re-install ${creatorEmail}
               const inputData = {
                 from: 'Decision Maker<graham.l.tyler@gmail.com>',
-                to: `lord_proton@yahoo.ca`,
+                to: `${creatorEmail}`,
                 subject: 'Decision-Maker Poll',
                 text: `Current Poll Results for Poll Code: ${poll_id} \n Given by: ${creatorEmail} \n Asked: ${questionText} \n Decision Maker results: ${results}`
               };
@@ -93,6 +94,11 @@ module.exports = (db) => {
                 }
               });
             })
+
+            .then(()=> {
+              res.redirect(`/pollResults/${poll_code}`);
+            })
+          })
             .catch(err => {
               res
                 .status(500)
@@ -100,6 +106,6 @@ module.exports = (db) => {
             });
         })
       });
-  })
+
   return router;
 };
