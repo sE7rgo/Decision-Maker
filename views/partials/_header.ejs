@@ -6,9 +6,9 @@
     <span class="span">Decision Maker</span>
     <div>
       <% if (email) {%>
-        <div style="margin-right: 30px;">Logged in As: <%= email %>
+        <div>Logged in As: <%=email%>
         </div>
-        <form class="form-inline" action='logout' method="POST">s
+        <form class="form-inline" action='logout' method="POST">
         <button type="submit" class="btn btn-outline-dark">Log out</button>
       </form>
       <% } else { %>

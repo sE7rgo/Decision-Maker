@@ -5,6 +5,7 @@ header {
   background-image: url("https://www.transparenttextures.com/patterns/light-wool.png");
   height: 13vw;
   width: 100vw;
+  z-index: 100;
 
   nav {
     padding: 2em;
@@ -14,9 +15,9 @@ header {
 }
 
 body, html {
-  margin-top: 7vw;
+  margin-top: 15vw;
   background: #222222;
-	font-family: 'Lato', sans-serif;
+  font-family: 'Lato', sans-serif;
 }
 
 .container {
