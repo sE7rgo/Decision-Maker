@@ -49,19 +49,18 @@ module.exports = (db) => {
         //     console.log(body);
         //   }
         // });
-
-        let templateVars = {
-          pollId: req.params.pollId,
-          question: questionText,
-          choices: options
-        }; console.log("LOOOK HERE >>>>>>>>>>> ", templateVars);
-        res.render("poll_result", templateVars);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+      let templateVars = {
+        pollId: req.params.pollId,
+        question: questionText,
+        choices: options
+      };
+      res.render("poll_result", templateVars);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
   });
   return router;
 };
