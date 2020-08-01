@@ -4,8 +4,7 @@
 let choice_rank = [];
 
 $(document).ready(() => {
-  const $form = $("#pollForm")
-    $('.vote').click((event) => {
+  $('.vote').click((event) => {
 
     //choice text
     const option = $(event.target).siblings('label').attr('for');
@@ -14,24 +13,43 @@ $(document).ready(() => {
     // hide element once clicked
     $(event.target).parent().hide('slow');
   })
-  $form.on("submit", function(submitEvent) {
-    const poll_code = $('ul').attr('id');
-      console.log(poll_code, choice_rank)
-      $.ajax({
-        url: $(event.target).attr('action'),
-        type: 'POST',
-        data: {
-          poll_code: poll_code,
-          options: choice_rank,
-          borda_rank: choice_rank
-        },
 
-      })
-      .then((choice_data)=>
-      //.append fill container holding results display similar to render tweets
-    //submitEvent.preventDefault();
-    return false;
+  // send req.body upon vote button
+  // $('.vote_button').click((event) => {
+  //   const poll_code = $('ul').attr('id');
+  //   $.ajax({
+  //     url: '/vote/new',
+  //     type: 'POST',
+  //     data: {
+  //       poll_code: poll_code,
+  //       options: choice_rank,
+  //       borda_rank: choice_rank
+  //     },
+  //   })
+  // });
+
+  $('#pollForm').on('submit', function(e) {
+    e.preventDefault();
+    const poll_code = $(this).find('ul').attr('id');
+    console.log('poll_code', poll_code);
+    $.ajax({
+      url: '/vote/new',
+      type: 'POST',
+      data: {
+        poll_code: poll_code,
+        options: choice_rank,
+        borda_rank: choice_rank
+      },
+    }).then(
+      (data, textStatus) => {
+        // example json: results: [ { a: ..., b: ... }]
+        // $('#someDiv').append(...)
+        console.log('data', data);
+        console.log('textstatus'. textStatus);
+
+        window.location.href = `/pollResults/${poll_code}`;
+      },
+      (err) => console.error
+    )
   })
 });
-
-
