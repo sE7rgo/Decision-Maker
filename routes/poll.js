@@ -7,6 +7,7 @@ module.exports = (db) => {
   //******************  GET the Polling Page Ready for Voter **********************
 
   router.get("/poll/:pollId", (req, result) => {
+    console.log("/poll/:pollId");
   //  let question_text;
   //   let choices_text = [];
     db.query(`

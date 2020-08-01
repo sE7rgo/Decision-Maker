@@ -7,6 +7,7 @@ const router  = express.Router();
 module.exports = (db) => {
 
   router.get("/pollResults/:pollId", (req, res) => {  //each vote cast, sends an update
+    console.log("GET /pollResults/pollId called");
     let query = {
       text: `SELECT questions.creator_email, questions.poll_code, questions.question_text, choices.choice_text, choices.borda_rank
       FROM questions
@@ -53,7 +54,7 @@ module.exports = (db) => {
           pollId: req.params.pollId,
           question: questionText,
           choices: options
-        };
+        }; console.log("LOOOK HERE >>>>>>>>>>> ", templateVars);
         res.render("poll_result", templateVars);
       })
       .catch(err => {

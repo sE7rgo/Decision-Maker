@@ -25,8 +25,11 @@ $(document).ready(() => {
           options: choice_rank,
           borda_rank: choice_rank
         },
+
       })
-    submitEvent.preventDefault();
+      .then((choice_data)=>
+      //.append fill container holding results display similar to render tweets
+    //submitEvent.preventDefault();
     return false;
   })
 });

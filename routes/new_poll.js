@@ -94,7 +94,7 @@ module.exports = (db) => {
                 console.log("got an error: ", err);
               } else {
                 console.log(body);
-                res.redirect(`/pollResults/${pollId}`);
+                res.redirect(`/pollResults/${poll_id}`);
               }
             });
           })

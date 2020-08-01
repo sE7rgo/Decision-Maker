@@ -8,7 +8,6 @@ module.exports = (db) => {
   //*********************  POST the Rankings to the DB  ***************************
 
   router.post("/vote/new", (req, res) => {
-    console.log('this is reqbody.........',req.body.borda_rank);
     const { options, poll_code, borda_rank } = req.body;
     let newChoices = req.body.borda_rank;
     let oldRankings = [];
@@ -39,7 +38,6 @@ module.exports = (db) => {
           ;`, [option.borda_rank, poll_code, option.choice_text]);
         });
         Promise.all(promises)
-
           .then(()=> {
             let query = {
               text: `SELECT questions.creator_email, questions.poll_code, questions.question_text, choices.choice_text, choices.borda_rank
@@ -79,8 +77,13 @@ module.exports = (db) => {
                   if (err) {
                     console.log("got an error: ", err);
                   } else {
-                    console.log(body);
-                    res.redirect(`/pollResults/${poll_code}`);  //moved redirect
+                    //console.log(body);
+                    res.json( {
+                        pollId: poll_code,
+                        question: null,
+                        choices: null
+                      }
+                    );  //moved redirect
                   }
                 });
               })
