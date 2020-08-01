@@ -23,7 +23,6 @@ module.exports = (db) => {
       .then(res => {
         let question_text = res.rows[0].question_text;
         let choices_text = res.rows.map(({choice_text}) => choice_text);
-        console.log('this is choices_text', choices_text);
         let templateVars = {
           question: question_text,
           pollId: req.params.pollId,
